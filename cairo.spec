@@ -1,19 +1,25 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	0.1.20
+Version:	0.1.22
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
-# Source0-md5:	1203aec55f9ec7beee317f4f84f08fa2
+# Source0-md5:	e3a2206cedaad27985b99fbc4aa9c485
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libpixman-devel >= 0.1.0
+BuildRequires:	fontconfig-devel
+BuildRequires:	freetype-devel >= 2.1.0
+BuildRequires:	glitz-devel >= 0.1.0
+BuildRequires:	libpixman-devel >= 0.1.1
+BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	xft-devel
+#BuildRequires:	xcb-devel (http://freedesktop.org/software/xcb - CVS only, not released yet)
+BuildRequires:	xrender-devel >= 0.6
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -61,7 +67,12 @@ Summary:	Development files for Cairo library
 Summary(pl):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libpixman-devel >= 0.1.0
+Requires:	fontconfig-devel
+Requires:	freetype-devel >= 2.1.0
+Requires:	glitz-devel >= 0.1.0
+Requires:	libpixman-devel >= 0.1.1
+Requires:	libpng-devel
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
