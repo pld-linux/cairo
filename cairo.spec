@@ -1,12 +1,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	0.1.18
+Version:	0.1.20
 Release:	1
 License:	BSD-like
 Group:		Libraries
 Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
-# Source0-md5:	b578f3cbfb8574bca85c86e4580bdf46
+# Source0-md5:	1203aec55f9ec7beee317f4f84f08fa2
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
