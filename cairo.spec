@@ -1,16 +1,17 @@
-%define	cvs_release 20030830
+%define	cvs_release 20030906
 Summary:	Cairo graphics API
 Name:		cairo
-Version:	0
+Version:	0.1.2
 Release:	0.%{cvs_release}.1
 License:	BSD-like
 Group:		Development/Libraries
 Source0:	%{name}-cvs-%{cvs_release}.tar.gz
-# Source0-md5:	6f1f206e8b9d19b520245b27364a6128
+# Source0-md5:	ef3595b37c2f70e5e072224c0037406b
 URL:		http://cairographics.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-BuildRequires: libic-devel
-BuildRequires: libpixregion-devel
+BuildRequires:	libic-devel >= 0.1.1
+BuildRequires:	libpixregion-devel >= 0.1.0
+BuildRequires:	xft-devel
 
 %description
 cairo
