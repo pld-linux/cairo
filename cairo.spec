@@ -16,15 +16,15 @@ BuildRequires: libpixregion-devel
 cairo
 
 %package devel
-Summary: Devel files for cairo
-Group: Development/Libraries
+Summary:	Devel files for cairo
+Group:		Development/Libraries
 
 %description devel
 Devel files for cairo
 
 %package static
-Summary: Static libraries for cairo
-Group: Development/Libraries
+Summary:	Static libraries for cairo
+Group:		Development/Libraries
 
 %description static
 Static libraries for cairo
