@@ -1,18 +1,20 @@
+%define		snap 20050105
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	0.2.0
-Release:	2
+Release:	3.%{snap}.1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
-Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
-# Source0-md5:	2ff2b3b52b862971d2baa3fede3a3d6e
+#Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+Source0:	cairo-snap-20050105.tar.bz2
+# Source0-md5:	9c2a12274d81848de152e78411011f7b
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 2.1.0
-BuildRequires:	glitz-devel >= 0.2.3
+BuildRequires:	glitz-devel >= 0.3.0
 BuildRequires:	libpixman-devel >= 0.1.2
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
@@ -96,7 +98,7 @@ Static Cairo library.
 Statyczna biblioteka Cairo.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 
 %build
 %{__libtoolize}
