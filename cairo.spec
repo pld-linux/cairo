@@ -73,7 +73,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 2.1.0
 Requires:	glitz-devel >= 0.2.3
-Requires:	libpixman-devel >= 0.1.1
+Requires:	libpixman-devel >= 0.1.2
 Requires:	libpng-devel
 Requires:	xrender-devel >= 0.6
 
