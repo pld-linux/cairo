@@ -12,7 +12,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 2.1.0
-BuildRequires:	glitz-devel >= 0.2.3
+BuildRequires:	glitz-devel >= 0.3.0
 BuildRequires:	libpixman-devel >= 0.1.2
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
@@ -21,7 +21,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 2.1.0
-Requires:	glitz >= 0.2.3
+Requires:	glitz >= 0.3.0
 Requires:	libpixman >= 0.1.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -72,7 +72,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 2.1.0
-Requires:	glitz-devel >= 0.2.3
+Requires:	glitz-devel >= 0.3.0
 Requires:	libpixman-devel >= 0.1.2
 Requires:	libpng-devel
 Requires:	xrender-devel >= 0.6
