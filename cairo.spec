@@ -1,19 +1,19 @@
-%define	cvs_release 20030906
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	0.1.2
-Release:	0.%{cvs_release}.1
+Version:	0.1.13
+Release:	1
 License:	BSD-like
 Group:		Libraries
-Source0:	%{name}-cvs-%{cvs_release}.tar.gz
-# Source0-md5:	ef3595b37c2f70e5e072224c0037406b
+Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+# Source0-md5:	23b099ebe971eeada8f6fdaef0f98f3b
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libic-devel >= 0.1.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	libic-devel >= 0.1.3
+BuildRequires:	slim >= 0.2.0
 BuildRequires:	xft-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -84,7 +84,7 @@ Static Cairo library.
 Statyczna biblioteka Cairo.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
 %{__libtoolize}
