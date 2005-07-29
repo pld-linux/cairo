@@ -1,14 +1,12 @@
-%define		snap	20050727
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	0.5.3
-Release:	0.%{snap}.1
+Version:	0.6.0
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
-Source0:	%{name}-%{version}-%{snap}.tar.gz
-# Source0-md5:	9b78b408bea572d2fb67d00a106ac3e0
-#Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+# Source0-md5:	0a0c8bd3bfddf2b6b9ffa670ee706723
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
