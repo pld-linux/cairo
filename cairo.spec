@@ -1,12 +1,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	0.6.0
+Version:	0.9.0
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
-# Source0-md5:	0a0c8bd3bfddf2b6b9ffa670ee706723
+# Source0-md5:	f87f5f89ac3e2d809bcacda36acd0aea
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -14,7 +14,7 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	glitz-devel >= 0.4.4
 BuildRequires:	gtk-doc >= 1.3
-BuildRequires:	libpixman-devel >= 0.1.5
+BuildRequires:	libpixman-devel >= 0.1.6
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
@@ -23,7 +23,7 @@ BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 2.1.0
 Requires:	glitz >= 0.4.4
-Requires:	libpixman >= 0.1.5
+Requires:	libpixman >= 0.1.6
 Requires:	xrender >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -74,8 +74,8 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 2.1.0
-Requires:	glitz-devel >= 0.4.0
-Requires:	libpixman-devel >= 0.1.4
+Requires:	glitz-devel >= 0.4.4
+Requires:	libpixman-devel >= 0.1.6
 Requires:	libpng-devel
 Requires:	xrender-devel >= 0.6
 
