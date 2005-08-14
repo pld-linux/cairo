@@ -14,7 +14,8 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	glitz-devel >= 0.4.4
 BuildRequires:	gtk-doc >= 1.3
-BuildRequires:	libpixman-devel >= 0.1.6
+# libpixman incorporated (explanation in NEWS)
+#BuildRequires:	libpixman-devel >= 0.1.6
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
@@ -23,7 +24,7 @@ BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 2.1.0
 Requires:	glitz >= 0.4.4
-Requires:	libpixman >= 0.1.6
+#Requires:	libpixman >= 0.1.6
 Requires:	xrender >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
