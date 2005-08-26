@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	xcb	# enable XCB backend (XCB not released yet)
+#
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
@@ -9,16 +13,16 @@ Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	f0ff35c91983b7bf226154e68b280be3
 URL:		http://cairographics.org/
 BuildConflicts:	libpixman-devel
-BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.54
+BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
-BuildRequires:	freetype-devel >= 2.1.0
+BuildRequires:	freetype-devel >= 2.1.4
 BuildRequires:	glitz-devel >= 0.4.4
 BuildRequires:	gtk-doc >= 1.3
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-#BuildRequires:	xcb-devel (http://freedesktop.org/software/xcb - CVS only, not released yet)
+%{?with_xcb:BuildRequires:	xcb-devel}
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 2.1.0
@@ -72,11 +76,11 @@ Summary(pl):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
-Requires:	freetype-devel >= 2.1.0
+Requires:	freetype-devel >= 2.1.4
 Requires:	glitz-devel >= 0.4.4
 Requires:	libpng-devel
+%{?with_xcb:Requires:	xcb-devel}
 Requires:	xrender-devel >= 0.6
-Obsoletes:	libpixman-devel
 
 %description devel
 Development files for Cairo library.
@@ -107,8 +111,7 @@ Statyczna biblioteka Cairo.
 %{__automake}
 %configure \
 	--enable-gtk-doc \
-	--enable-quartz  \
-	--enable-xcb \
+	%{?with_xcb:--enable-xcb} \
 	--enable-glitz \
 	--enable-ps \
 	--enable-pdf \
