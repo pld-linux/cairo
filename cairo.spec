@@ -24,7 +24,7 @@ BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
-Requires:	freetype >= 2.1.0
+Requires:	freetype >= 2.1.4
 Requires:	glitz >= 0.4.4
 Requires:	xrender >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
