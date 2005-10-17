@@ -15,7 +15,7 @@ URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
-BuildRequires:	freetype-devel >= 2.1.4
+BuildRequires:	freetype-devel >= 2.1.10
 BuildRequires:	glitz-devel >= 0.4.4
 BuildRequires:	gtk-doc >= 1.3
 BuildRequires:	libpng-devel
@@ -24,7 +24,7 @@ BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
-Requires:	freetype >= 2.1.4
+Requires:	freetype >= 2.1.10
 Requires:	glitz >= 0.4.4
 Requires:	xrender >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -75,7 +75,7 @@ Summary(pl):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
-Requires:	freetype-devel >= 2.1.4
+Requires:	freetype-devel >= 2.1.10
 Requires:	glitz-devel >= 0.4.4
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
