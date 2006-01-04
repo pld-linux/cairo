@@ -8,7 +8,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.0.2
-Release:	3
+Release:	4
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -18,7 +18,7 @@ URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
-BuildRequires:	freetype-devel >= 2.1.10
+BuildRequires:	freetype-devel >= 1:2.1.10
 BuildRequires:	glitz-devel >= 0.4.4
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
@@ -27,7 +27,7 @@ BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
-Requires:	freetype >= 2.1.10
+Requires:	freetype >= 1:2.1.10
 Requires:	glitz >= 0.4.4
 Requires:	xrender >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -78,7 +78,7 @@ Summary(pl):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
-Requires:	freetype-devel >= 2.1.10
+Requires:	freetype-devel >= 1:2.1.10
 Requires:	glitz-devel >= 0.4.4
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
