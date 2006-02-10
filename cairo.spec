@@ -26,7 +26,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
-BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
 %{?with_glitz:Requires:	glitz >= 0.4.4}
@@ -82,7 +82,7 @@ Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.4.4}
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
-Requires:	xorg-lib-libXrender-devel
+Requires:	xorg-lib-libXrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
