@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
+%bcond_with	glitz		# build with glitz backend
 %bcond_with	xcb		# enable XCB backend (XCB not released yet)
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
@@ -8,7 +9,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.0.2
-Release:	6
+Release:	7
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -19,7 +20,7 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
-BuildRequires:	glitz-devel >= 0.4.4
+%{?with_glitz:BuildRequires:	glitz-devel >= 0.4.4}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
@@ -28,7 +29,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
-Requires:	glitz >= 0.4.4
+%{?with_glitz:Requires:	glitz >= 0.4.4}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -114,7 +115,7 @@ Statyczna biblioteka Cairo.
 %configure \
 	%{?with_apidocs:--enable-gtk-doc} \
 	%{?with_xcb:--enable-xcb} \
-	--enable-glitz \
+	%{?with_glitz:--enable-glitz} \
 	--enable-ps \
 	--enable-pdf \
 	--with-html-dir=%{_gtkdocdir}
