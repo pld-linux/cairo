@@ -79,7 +79,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
-Requires:	glitz-devel >= 0.4.4
+%{?with_glitz:Requires:	glitz-devel >= 0.4.4}
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
 Requires:	xorg-lib-libXrender-devel
