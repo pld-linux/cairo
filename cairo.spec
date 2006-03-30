@@ -1,35 +1,34 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_with	glitz		# build with glitz backend
 %bcond_with	xcb		# enable XCB backend (XCB not released yet)
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.0.2
-Release:	7
+Version:	1.0.4
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	d0b7111a14f90ec3afa777ec40c44984
-Patch0:		%{name}-gcc4.patch
+# Source0-md5:	9002b0e69b3f94831a22d3f2a7735ce2
+Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:BuildRequires:	glitz-devel >= 0.4.4}
+BuildRequires:	glitz-devel >= 0.4.4
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
-BuildRequires:	xorg-lib-libXrender-devel >= 0.6
+BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
-%{?with_glitz:Requires:	glitz >= 0.4.4}
+Requires:	glitz >= 0.4.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,10 +78,10 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:Requires:	glitz-devel >= 0.4.4}
+Requires:	glitz-devel >= 0.4.4
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
-Requires:	xorg-lib-libXrender-devel >= 0.6
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
@@ -115,7 +114,7 @@ Statyczna biblioteka Cairo.
 %configure \
 	%{?with_apidocs:--enable-gtk-doc} \
 	%{?with_xcb:--enable-xcb} \
-	%{?with_glitz:--enable-glitz} \
+	--enable-glitz \
 	--enable-ps \
 	--enable-pdf \
 	--with-html-dir=%{_gtkdocdir}
