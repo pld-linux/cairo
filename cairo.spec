@@ -1,7 +1,6 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_with	glitz		# build with glitz backend
 %bcond_with	xcb		# enable XCB backend (XCB not released yet)
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
@@ -20,16 +19,16 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:BuildRequires:	glitz-devel >= 0.4.4}
+BuildRequires:	glitz-devel >= 0.4.4
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 %{?with_xcb:BuildRequires:	xcb-devel}
-BuildRequires:	xorg-lib-libXrender-devel >= 0.6
+BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
-%{?with_glitz:Requires:	glitz >= 0.4.4}
+Requires:	glitz >= 0.4.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,10 +78,10 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:Requires:	glitz-devel >= 0.4.4}
+Requires:	glitz-devel >= 0.4.4
 Requires:	libpng-devel
 %{?with_xcb:Requires:	xcb-devel}
-Requires:	xorg-lib-libXrender-devel >= 0.6
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
@@ -115,7 +114,7 @@ Statyczna biblioteka Cairo.
 %configure \
 	%{?with_apidocs:--enable-gtk-doc} \
 	%{?with_xcb:--enable-xcb} \
-	%{?with_glitz:--enable-glitz} \
+	--enable-glitz \
 	--enable-ps \
 	--enable-pdf \
 	--with-html-dir=%{_gtkdocdir}
