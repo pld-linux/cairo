@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_with	glitz		# build with glitz backend
-%bcond_with	xcb		# enable XCB backend (XCB not released yet)
+%bcond_with	xcb		# enable XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
@@ -25,7 +25,7 @@ BuildRequires:	freetype-devel >= 1:2.1.10
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-%{?with_xcb:BuildRequires:	xcb-devel}
+%{?with_xcb:BuildRequires:	libxcb-devel}
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
@@ -81,7 +81,7 @@ Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
-%{?with_xcb:Requires:	xcb-devel}
+%{?with_xcb:Requires:	libxcb-devel}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 
 %description devel
