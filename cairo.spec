@@ -107,6 +107,7 @@ Statyczna biblioteka Cairo.
 %patch0 -p1
 
 %build
+%{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal}
 %{__autoheader}
