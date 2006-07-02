@@ -2,34 +2,33 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_with	glitz		# build with glitz backend
-%bcond_with	xcb		# enable XCB backend (XCB not released yet)
+%bcond_with	xcb		# enable XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.0.4
+Version:	1.2.0
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	9002b0e69b3f94831a22d3f2a7735ce2
-Patch0:		%{name}-link.patch
+# Source0-md5:	5c9ad71d1b582907eee0497b196689ef
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:BuildRequires:	glitz-devel >= 0.4.4}
+%{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-%{?with_xcb:BuildRequires:	xcb-devel}
+%{?with_xcb:BuildRequires:	libxcb-devel}
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
-%{?with_glitz:Requires:	glitz >= 0.4.4}
+%{?with_glitz:Requires:	glitz >= 0.5.1}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,9 +78,9 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
-%{?with_glitz:Requires:	glitz-devel >= 0.4.4}
+%{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
-%{?with_xcb:Requires:	xcb-devel}
+%{?with_xcb:Requires:	libxcb-devel}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 
 %description devel
@@ -104,9 +103,9 @@ Statyczna biblioteka Cairo.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
+%{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal}
 %{__autoheader}
