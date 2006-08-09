@@ -14,9 +14,10 @@ License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	2460487b1257a5583c889b1b9d2033ec
+Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
-BuildRequires:	automake >= 1.7
+BuildRequires:	automake >= 1:1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
@@ -115,6 +116,7 @@ Dokumentacja API Cairo.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
