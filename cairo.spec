@@ -8,12 +8,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.2.0
+Version:	1.2.2
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	5c9ad71d1b582907eee0497b196689ef
+# Source0-md5:	2460487b1257a5583c889b1b9d2033ec
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1.7
@@ -101,6 +101,18 @@ Static Cairo library.
 %description static -l pl
 Statyczna biblioteka Cairo.
 
+%package apidocs
+Summary:	Cairo API documentation
+Summary(pl):	Dokumentacja API Cairo
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+Cairo API documentation.
+
+%description apidocs -l pl
+Dokumentacja API Cairo. 
+
 %prep
 %setup -q
 
@@ -145,8 +157,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*.pc
-%{_gtkdocdir}/cairo
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/cairo
