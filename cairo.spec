@@ -1,34 +1,33 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_with	xcb		# enable XCB backend (XCB not released yet)
+%bcond_with	glitz		# build with glitz backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.0.4
-Release:	1
+Version:	1.2.6
+Release:	2
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	9002b0e69b3f94831a22d3f2a7735ce2
+# Source0-md5:	487b3d7515752fe57f780d0fd707b01a
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
-BuildRequires:	automake >= 1.7
+BuildRequires:	automake >= 1:1.7
 BuildRequires:	fontconfig-devel
 BuildRequires:	freetype-devel >= 1:2.1.10
-BuildRequires:	glitz-devel >= 0.4.4
+%{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-%{?with_xcb:BuildRequires:	xcb-devel}
 BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
-Requires:	glitz >= 0.4.4
+%{?with_glitz:Requires:	glitz >= 0.5.1}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -78,9 +77,8 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
-Requires:	glitz-devel >= 0.4.4
+%{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
-%{?with_xcb:Requires:	xcb-devel}
 Requires:	xrender-devel >= 0.6
 
 %description devel
@@ -101,11 +99,24 @@ Static Cairo library.
 %description static -l pl
 Statyczna biblioteka Cairo.
 
+%package apidocs
+Summary:	Cairo API documentation
+Summary(pl):	Dokumentacja API Cairo
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+Cairo API documentation.
+
+%description apidocs -l pl
+Dokumentacja API Cairo. 
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
+%{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal}
 %{__autoheader}
@@ -113,8 +124,7 @@ Statyczna biblioteka Cairo.
 %{__automake}
 %configure \
 	%{?with_apidocs:--enable-gtk-doc} \
-	%{?with_xcb:--enable-xcb} \
-	--enable-glitz \
+	%{?with_glitz:--enable-glitz} \
 	--enable-ps \
 	--enable-pdf \
 	--with-html-dir=%{_gtkdocdir}
@@ -145,8 +155,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*.pc
-%{_gtkdocdir}/cairo
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/cairo
