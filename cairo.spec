@@ -2,18 +2,17 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_with	glitz		# build with glitz backend
-%bcond_with	xcb		# enable XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.2.4
-Release:	1
+Version:	1.2.6
+Release:	2
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	1222b2bfdf113e2c92f66b3389659f2d
+# Source0-md5:	487b3d7515752fe57f780d0fd707b01a
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
@@ -25,8 +24,7 @@ BuildRequires:	freetype-devel >= 1:2.1.10
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-%{?with_xcb:BuildRequires:	libxcb-devel}
-BuildRequires:	xorg-lib-libXrender-devel >= 0.6
+BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.1.10
 %{?with_glitz:Requires:	glitz >= 0.5.1}
@@ -81,8 +79,7 @@ Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
-%{?with_xcb:Requires:	libxcb-devel}
-Requires:	xorg-lib-libXrender-devel >= 0.6
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
@@ -127,7 +124,6 @@ Dokumentacja API Cairo.
 %{__automake}
 %configure \
 	%{?with_apidocs:--enable-gtk-doc} \
-	%{?with_xcb:--enable-xcb} \
 	%{?with_glitz:--enable-glitz} \
 	--enable-ps \
 	--enable-pdf \
