@@ -6,7 +6,7 @@
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
-Summary(pl.UTF-8):   Cairo - wieloplatformowa biblioteka graficzna 2D
+Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.2.6
 Release:	2
@@ -74,7 +74,7 @@ PostScript, PDF i być może OpenGL.
 
 %package devel
 Summary:	Development files for Cairo library
-Summary(pl.UTF-8):   Pliki programistyczne biblioteki Cairo
+Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
@@ -92,7 +92,7 @@ Pliki programistyczne biblioteki Cairo.
 
 %package static
 Summary:	Static Cairo library
-Summary(pl.UTF-8):   Statyczna biblioteka Cairo
+Summary(pl.UTF-8):	Statyczna biblioteka Cairo
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -104,7 +104,7 @@ Statyczna biblioteka Cairo.
 
 %package apidocs
 Summary:	Cairo API documentation
-Summary(pl.UTF-8):   Dokumentacja API Cairo
+Summary(pl.UTF-8):	Dokumentacja API Cairo
 Group:		Documentation
 Requires:	gtk-doc-common
 
