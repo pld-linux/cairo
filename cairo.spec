@@ -6,7 +6,7 @@
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
 Summary:	Cairo - multi-platform 2D graphics library
-Summary(pl):	Cairo - wieloplatformowa biblioteka graficzna 2D
+Summary(pl.UTF-8):   Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.2.6
 Release:	2
@@ -52,29 +52,29 @@ writing, Xc allows Cairo to target X drawables as well as generic
 image buffers. Future backends such as PostScript, PDF, and perhaps
 OpenGL are currently being planned.
 
-%description -l pl
-Cairo obs³uguje oparty na wektorach rendering z antyaliasingiem dla X.
-¦cie¿ki sk³adaj± siê z odcinków i splajnów kubicznych, a renderowane
-mog± byæ z dowoln± grubo¶ci± i ró¿nymi stylami po³±czeñ i zakoñczeñ.
-Wszystkie kolory mog± byæ podane z opcjonaln± pó³przezroczysto¶ci±
-(podan± przez wspó³czynnik nieprzezroczysto¶ci lub alpha) i ³±czone
-przy u¿yciu rozszerzonego algorytmu mieszania Portera-Duffa, który
-mo¿na znale¼æ w rozszerzeniu X Render.
+%description -l pl.UTF-8
+Cairo obsÅ‚uguje oparty na wektorach rendering z antyaliasingiem dla X.
+ÅšcieÅ¼ki skÅ‚adajÄ… siÄ™ z odcinkÃ³w i splajnÃ³w kubicznych, a renderowane
+mogÄ… byÄ‡ z dowolnÄ… gruboÅ›ciÄ… i rÃ³Å¼nymi stylami poÅ‚Ä…czeÅ„ i zakoÅ„czeÅ„.
+Wszystkie kolory mogÄ… byÄ‡ podane z opcjonalnÄ… pÃ³Å‚przezroczystoÅ›ciÄ…
+(podanÄ… przez wspÃ³Å‚czynnik nieprzezroczystoÅ›ci lub alpha) i Å‚Ä…czone
+przy uÅ¼yciu rozszerzonego algorytmu mieszania Portera-Duffa, ktÃ³ry
+moÅ¼na znaleÅºÄ‡ w rozszerzeniu X Render.
 
-Cairo eksportuje stanowe API renderuj±ce w duchu podobne do operatorów
-konstruowania ¶cie¿ek, tekstu i rysowania z PostScriptu (ze znacznym
-dodatkiem pó³przezroczysto¶ci w modelu obrazu). Kiedy API zostanie
-ukoñczone, ma obs³ugiwaæ pe³ny model obrazu z PDF w wersji 1.4.
+Cairo eksportuje stanowe API renderujÄ…ce w duchu podobne do operatorÃ³w
+konstruowania Å›cieÅ¼ek, tekstu i rysowania z PostScriptu (ze znacznym
+dodatkiem pÃ³Å‚przezroczystoÅ›ci w modelu obrazu). Kiedy API zostanie
+ukoÅ„czone, ma obsÅ‚ugiwaÄ‡ peÅ‚ny model obrazu z PDF w wersji 1.4.
 
-Cairo do backendowego renderowania wykorzystuje bibliotekê Xc. Xc
-dostarcza abstrakcyjny interfejs do renderowania na wiele rodzajów
-wyj¶æ. Aktualnie Xc pozwala Cairo tworzyæ obiekty X, a tak¿e ogólne
-bufory obrazu. W przysz³o¶ci planowane s± takie backendy jak
-PostScript, PDF i byæ mo¿e OpenGL.
+Cairo do backendowego renderowania wykorzystuje bibliotekÄ™ Xc. Xc
+dostarcza abstrakcyjny interfejs do renderowania na wiele rodzajÃ³w
+wyjÅ›Ä‡. Aktualnie Xc pozwala Cairo tworzyÄ‡ obiekty X, a takÅ¼e ogÃ³lne
+bufory obrazu. W przyszÅ‚oÅ›ci planowane sÄ… takie backendy jak
+PostScript, PDF i byÄ‡ moÅ¼e OpenGL.
 
 %package devel
 Summary:	Development files for Cairo library
-Summary(pl):	Pliki programistyczne biblioteki Cairo
+Summary(pl.UTF-8):   Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
@@ -87,31 +87,31 @@ Requires:	xorg-lib-libXrender-devel >= 0.6
 %description devel
 Development files for Cairo library.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Pliki programistyczne biblioteki Cairo.
 
 %package static
 Summary:	Static Cairo library
-Summary(pl):	Statyczna biblioteka Cairo
+Summary(pl.UTF-8):   Statyczna biblioteka Cairo
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static Cairo library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka Cairo.
 
 %package apidocs
 Summary:	Cairo API documentation
-Summary(pl):	Dokumentacja API Cairo
+Summary(pl.UTF-8):   Dokumentacja API Cairo
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description apidocs
 Cairo API documentation.
 
-%description apidocs -l pl
+%description apidocs -l pl.UTF-8
 Dokumentacja API Cairo. 
 
 %prep
