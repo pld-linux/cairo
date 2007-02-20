@@ -4,22 +4,25 @@
 %bcond_with	glitz		# build with glitz backend
 %bcond_with	xcb		# enable XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
+%bcond_without	lcd             # use own LCD filtering instead of freetype's
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.2.6
-Release:	2
+Release:	3
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	487b3d7515752fe57f780d0fd707b01a
 Patch0:		%{name}-link.patch
+Patch1:		http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1:1.7
 BuildRequires:	fontconfig-devel
-BuildRequires:	freetype-devel >= 1:2.1.10
+%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
+%{!?with_lcd:BuildRequires:	freetype-devel >= 1:2.1.10}
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
@@ -117,6 +120,7 @@ Dokumentacja API Cairo.
 %prep
 %setup -q
 %patch0 -p1
+%{?with_lcd:%patch1 -p1}
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
