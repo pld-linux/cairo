@@ -50,12 +50,6 @@ significant addition of translucence in the imaging model). When
 complete, the API is intended to support the complete imaging model of
 PDF 1.4.
 
-Cairo relies on the Xc library for backend rendering. Xc provides an
-abstract interface for rendering to multiple target types. As of this
-writing, Xc allows Cairo to target X drawables as well as generic
-image buffers. Future backends such as PostScript, PDF, and perhaps
-OpenGL are currently being planned.
-
 %description -l pl.UTF-8
 Cairo obsługuje oparty na wektorach rendering z antyaliasingiem dla X.
 Ścieżki składają się z odcinków i splajnów kubicznych, a renderowane
@@ -69,12 +63,6 @@ Cairo eksportuje stanowe API renderujące w duchu podobne do operatorów
 konstruowania ścieżek, tekstu i rysowania z PostScriptu (ze znacznym
 dodatkiem półprzezroczystości w modelu obrazu). Kiedy API zostanie
 ukończone, ma obsługiwać pełny model obrazu z PDF w wersji 1.4.
-
-Cairo do backendowego renderowania wykorzystuje bibliotekę Xc. Xc
-dostarcza abstrakcyjny interfejs do renderowania na wiele rodzajów
-wyjść. Aktualnie Xc pozwala Cairo tworzyć obiekty X, a także ogólne
-bufory obrazu. W przyszłości planowane są takie backendy jak
-PostScript, PDF i być może OpenGL.
 
 %package devel
 Summary:	Development files for Cairo library
