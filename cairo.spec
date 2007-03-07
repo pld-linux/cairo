@@ -29,8 +29,8 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 %if %{with xcb}
-BuildRequires:	libxcb-devel
-BuildRequires:	xcb-util-devel
+BuildRequires:	libxcb-devel >= 0.9.92
+BuildRequires:	xcb-util-devel >= 0.2
 %endif
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
@@ -76,7 +76,8 @@ Requires:	fontconfig-devel
 Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
-%{?with_xcb:Requires:	libxcb-devel}
+%{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
+%{?with_xcb:Requires:	xcb-util-devel >= 0.2}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 
 %description devel
