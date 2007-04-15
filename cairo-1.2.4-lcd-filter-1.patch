@@ -373,7 +373,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  	    stride = bitmap->pitch;
  	    if (own_buffer) {
  		data = bitmap->buffer;
-@@ -778,101 +1056,19 @@
+@@ -1062,104 +1062,15 @@
  		memcpy (data, bitmap->buffer, stride * height);
  	    }
  	    format = CAIRO_FORMAT_A8;
@@ -390,13 +390,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -	    unsigned int    width_rgba, stride_rgba;
 -	    int		    vmul = 1;
 -	    int		    hmul = 1;
-+            } else {
-+                // if we get there, the  data from the source bitmap
-+                // really comes from _fill_xrender_bitmap, and is
-+                // made of 32-bit ARGB or ABGR values
-+                assert(own_buffer != 0);
-+                assert(bitmap->pixel_mode != FT_PIXEL_MODE_GRAY);
- 
+-
 -	    switch (font_options->subpixel_order) {
 -	    case CAIRO_SUBPIXEL_ORDER_DEFAULT:
 -	    case CAIRO_SUBPIXEL_ORDER_RGB:
@@ -415,10 +409,21 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -	     * Filter the glyph to soften the color fringes
 -	     */
 -	    width_rgba = width;
-+                data   = bitmap->buffer;
++	    } else {
++		    // if we get there, the  data from the source bitmap
++		    // really comes from _fill_xrender_bitmap, and is
++		    // made of 32-bit ARGB or ABGR values
++		    assert(own_buffer != 0);
++		    assert(bitmap->pixel_mode != FT_PIXEL_MODE_GRAY);
++		    data   = bitmap->buffer;
  	    stride = bitmap->pitch;
 -	    stride_rgba = (width_rgba * 4 + 3) & ~3;
 -	    data_rgba = calloc (1, stride_rgba * height);
+-	    if (data_rgba == NULL) {
+-		if (own_buffer)
+-		    free (bitmap->buffer);
+-		return CAIRO_STATUS_NO_MEMORY;
+-	    }
 -
 -	    os = 1;
 -	    switch (font_options->subpixel_order) {
@@ -479,10 +484,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -	}
  	}
  	break;
-+
      case FT_PIXEL_MODE_GRAY2:
-     case FT_PIXEL_MODE_GRAY4:
- 	/* These could be triggered by very rare types of TrueType fonts */
 @@ -880,20 +1076,21 @@
  	return CAIRO_STATUS_NO_MEMORY;
      }
