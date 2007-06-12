@@ -1,7 +1,6 @@
-diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
---- cairo-1.2.4-old/src/cairo-ft-font.c	2006-10-24 11:05:15.000000000 +0200
-+++ cairo-1.2.4/src/cairo-ft-font.c	2006-10-24 11:06:45.000000000 +0200
-@@ -53,6 +53,8 @@
+--- cairo-1.4.8/src/cairo-ft-font.c.orig	2007-06-07 19:45:39.000000000 +0200
++++ cairo-1.4.8/src/cairo-ft-font.c	2007-06-12 23:42:30.671182698 +0200
+@@ -55,6 +55,8 @@
  #include FT_SYNTHESIS_H
  #endif
  
@@ -10,8 +9,8 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  #define DOUBLE_TO_26_6(d) ((FT_F26Dot6)((d) * 64.0))
  #define DOUBLE_FROM_26_6(t) ((double)(t) / 64.0)
  #define DOUBLE_TO_16_16(d) ((FT_Fixed)((d) * 65536.0))
-@@ -683,23 +685,300 @@
-     assert (error == 0);
+@@ -701,23 +703,300 @@
+     return CAIRO_STATUS_SUCCESS;
  }
  
 -/* Empirically-derived subpixel filtering values thanks to Keith
@@ -327,7 +326,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  
  /* Fills in val->image with an image surface created from @bitmap
   */
-@@ -712,12 +991,14 @@
+@@ -730,12 +1009,14 @@
      int width, height, stride;
      unsigned char *data;
      int format = CAIRO_FORMAT_A8;
@@ -344,7 +343,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
      case FT_PIXEL_MODE_MONO:
  	stride = (((width + 31) & ~31) >> 3);
  	if (own_buffer) {
-@@ -745,7 +1026,6 @@
+@@ -765,7 +1046,6 @@
  		}
  	    }
  	}
@@ -352,7 +351,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  #ifndef WORDS_BIGENDIAN
  	{
  	    unsigned char   *d = data;
-@@ -757,17 +1037,15 @@
+@@ -777,17 +1057,15 @@
  	    }
  	}
  #endif
@@ -373,7 +372,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  	    stride = bitmap->pitch;
  	    if (own_buffer) {
  		data = bitmap->buffer;
-@@ -1062,104 +1062,15 @@
+@@ -800,107 +1078,19 @@
  		memcpy (data, bitmap->buffer, stride * height);
  	    }
  	    format = CAIRO_FORMAT_A8;
@@ -409,19 +408,13 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -	     * Filter the glyph to soften the color fringes
 -	     */
 -	    width_rgba = width;
-+	    } else {
-+		    // if we get there, the  data from the source bitmap
-+		    // really comes from _fill_xrender_bitmap, and is
-+		    // made of 32-bit ARGB or ABGR values
-+		    assert(own_buffer != 0);
-+		    assert(bitmap->pixel_mode != FT_PIXEL_MODE_GRAY);
-+		    data   = bitmap->buffer;
- 	    stride = bitmap->pitch;
+-	    stride = bitmap->pitch;
 -	    stride_rgba = (width_rgba * 4 + 3) & ~3;
 -	    data_rgba = calloc (1, stride_rgba * height);
 -	    if (data_rgba == NULL) {
 -		if (own_buffer)
 -		    free (bitmap->buffer);
+-		_cairo_error (CAIRO_STATUS_NO_MEMORY);
 -		return CAIRO_STATUS_NO_MEMORY;
 -	    }
 -
@@ -469,7 +462,13 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -		    *out++ = (green << 24) | (red << 16) | (green << 8) | blue;
 -		}
 -	    }
--
++            } else {
++                // if we get there, the  data from the source bitmap
++                // really comes from _fill_xrender_bitmap, and is
++                // made of 32-bit ARGB or ABGR values
++                assert(own_buffer != 0);
++                assert(bitmap->pixel_mode != FT_PIXEL_MODE_GRAY);
+ 
 -	    /* Images here are stored in native format. The
 -	     * backend must convert to its own format as needed
 -	     */
@@ -478,14 +477,19 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -		free (bitmap->buffer);
 -	    data = data_rgba;
 -	    stride = stride_rgba;
++                data   = bitmap->buffer;
++	    stride = bitmap->pitch;
  	    format = CAIRO_FORMAT_ARGB32;
 -	    subpixel = TRUE;
 -	    break;
 -	}
  	}
  	break;
++
      case FT_PIXEL_MODE_GRAY2:
-@@ -880,20 +1076,21 @@
+     case FT_PIXEL_MODE_GRAY4:
+ 	/* These could be triggered by very rare types of TrueType fonts */
+@@ -911,20 +1101,21 @@
  	return CAIRO_STATUS_NO_MEMORY;
      }
  
@@ -513,7 +517,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
      return CAIRO_STATUS_SUCCESS;
  }
  
-@@ -917,16 +1114,44 @@
+@@ -948,16 +1139,44 @@
  		       cairo_font_options_t	 *font_options,
  		       cairo_image_surface_t	**surface)
  {
@@ -562,7 +566,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  
      FT_Outline_Get_CBox (outline, &cbox);
  
-@@ -937,98 +1162,90 @@
+@@ -968,100 +1187,95 @@
  
      width = (unsigned int) ((cbox.xMax - cbox.xMin) >> 6);
      height = (unsigned int) ((cbox.yMax - cbox.yMin) >> 6);
@@ -666,21 +670,25 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
 -	if (bitmap.buffer == NULL) {
 +        FT_Library_SetLcdFilter( library, FT_LCD_FILTER_NONE );
 +
-+        if (fterror != 0)
++        if (fterror != 0) {
+ 	    _cairo_error (CAIRO_STATUS_NO_MEMORY);
  	    return CAIRO_STATUS_NO_MEMORY;
--	}
+ 	}
  
 -	FT_Outline_Translate (outline, -cbox.xMin*hmul, -cbox.yMin*vmul);
 +        bitmap_size = _compute_xrender_bitmap_size( &bitmap,
 +                                                    face->glyph,
 +                                                    render_mode );
-+        if ( bitmap_size < 0 )
++        if ( bitmap_size < 0 ) {
++	    _cairo_error (CAIRO_STATUS_NO_MEMORY);
 +            return CAIRO_STATUS_NO_MEMORY;
++	}
  
 -	if (FT_Outline_Get_Bitmap (glyphslot->library, outline, &bitmap) != 0) {
 -	    free (bitmap.buffer);
 +        bitmap.buffer = calloc(1, bitmap_size);
 +        if (bitmap.buffer == NULL) {
+ 	    _cairo_error (CAIRO_STATUS_NO_MEMORY);
  	    return CAIRO_STATUS_NO_MEMORY;
  	}
  
@@ -706,7 +714,7 @@ diff -urbN cairo-1.2.4-old/src/cairo-ft-font.c cairo-1.2.4/src/cairo-ft-font.c
  
      return CAIRO_STATUS_SUCCESS;
  }
-@@ -1389,11 +1606,11 @@
+@@ -1433,11 +1647,11 @@
  		case CAIRO_SUBPIXEL_ORDER_DEFAULT:
  		case CAIRO_SUBPIXEL_ORDER_RGB:
  		case CAIRO_SUBPIXEL_ORDER_BGR:
