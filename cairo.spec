@@ -60,7 +60,7 @@ Cairo obsługuje oparty na wektorach rendering z antyaliasingiem dla X.
 mogą być z dowolną grubością i różnymi stylami połączeń i zakończeń.
 Wszystkie kolory mogą być podane z opcjonalną półprzezroczystością
 (podaną przez współczynnik nieprzezroczystości lub alpha) i łączone
-przy użyciu rozszerzonego algorytmu mieszania Portera-Duffa, który
+przy użyciu rozszerzonego algorytmu składania Portera-Duffa, który
 można znaleźć w rozszerzeniu X Render.
 
 Cairo eksportuje stanowe API renderujące w duchu podobne do operatorów
