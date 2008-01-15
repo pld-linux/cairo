@@ -9,12 +9,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.4.12
+Version:	1.4.14
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	8e50c2c0d56388e4ee94196c0c7a7904
+# Source0-md5:	e8c442ff821c0719a69508fecba9038f
 Patch0:		%{name}-link.patch
 # updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # NOTE: this patch wasn't applied upstream, is unmaintained by its author for
@@ -151,18 +151,27 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_includedir}/*
-%{_pkgconfigdir}/*.pc
+%attr(755,root,root) %{_libdir}/libcairo.so
+%{_libdir}/libcairo.la
+%{_includedir}/cairo
+%{_pkgconfigdir}/cairo.pc
+%{_pkgconfigdir}/cairo-ft.pc
+%{_pkgconfigdir}/cairo-pdf.pc
+%{_pkgconfigdir}/cairo-png.pc
+%{_pkgconfigdir}/cairo-ps.pc
+%{_pkgconfigdir}/cairo-svg.pc
+%{_pkgconfigdir}/cairo-xcb.pc
+%{_pkgconfigdir}/cairo-xlib.pc
+%{_pkgconfigdir}/cairo-xlib-xrender.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libcairo.a
 
 %files apidocs
 %defattr(644,root,root,755)
