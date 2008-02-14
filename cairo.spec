@@ -19,13 +19,13 @@ Patch0:		%{name}-link.patch
 # updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # NOTE: this patch wasn't applied upstream, is unmaintained by its author for
 # about a year and becomes more and more ugly => it's subject to drop soon  --q
-Patch1:		cairo-1.2.4-lcd-filter-1.patch
+Patch1:		%{name}-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1:1.7
 BuildRequires:	fontconfig-devel
-%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
 %{!?with_lcd:BuildRequires:	freetype-devel >= 1:2.1.10}
+%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
@@ -111,7 +111,7 @@ Requires:	gtk-doc-common
 Cairo API documentation.
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API Cairo. 
+Dokumentacja API Cairo.
 
 %prep
 %setup -q
