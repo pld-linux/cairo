@@ -1,0 +1,3 @@
+- updated to 1.4.12
+- updated lcd-filter patch again (and enough)
+  [fixes CVE-2007-5503]
