@@ -4,22 +4,22 @@
 %bcond_with	glitz		# build with glitz backend
 %bcond_without	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_without	lcd             # use own LCD filtering instead of freetype's
+%bcond_with	lcd             # use own LCD filtering instead of freetype's
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.4.14
-Release:	1
+Version:	1.5.8
+Release:	0.1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
-Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	e8c442ff821c0719a69508fecba9038f
+Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+# Source0-md5:	4a1711892ac571b156592d8d53e86da1
 Patch0:		%{name}-link.patch
 # updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # NOTE: this patch wasn't applied upstream, is unmaintained by its author for
 # about a year and becomes more and more ugly => it's subject to drop soon  --q
-Patch1:		%{name}-1.2.4-lcd-filter-1.patch
+#Patch1:		%{name}-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1:1.7
@@ -116,7 +116,7 @@ Dokumentacja API Cairo.
 %prep
 %setup -q
 %patch0 -p1
-%{?with_lcd:%patch1 -p1}
+#%{?with_lcd:%patch1 -p1}
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
@@ -150,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
-%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
 
