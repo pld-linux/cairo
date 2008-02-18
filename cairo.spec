@@ -31,6 +31,7 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	pixman-devel >= 0.9.6
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
@@ -173,6 +174,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/cairo
+%endif
