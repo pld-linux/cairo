@@ -30,8 +30,8 @@ BuildRequires:	fontconfig-devel
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
-BuildRequires:	pkgconfig
 BuildRequires:	pixman-devel >= 0.9.6
+BuildRequires:	pkgconfig
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
@@ -81,6 +81,7 @@ Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
 %{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
+Requires:	pixman-devel >= 0.9.6
 %{?with_xcb:Requires:	xcb-util-devel >= 0.2}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 
