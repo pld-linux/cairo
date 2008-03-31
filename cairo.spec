@@ -141,6 +141,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{!?with_apidocs:rm -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -165,7 +167,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
 %{_pkgconfigdir}/cairo-svg.pc
-%{_pkgconfigdir}/cairo-xcb.pc
+%{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
 %{_pkgconfigdir}/cairo-xlib.pc
 %{_pkgconfigdir}/cairo-xlib-xrender.pc
 
@@ -173,6 +175,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/cairo
+%endif
