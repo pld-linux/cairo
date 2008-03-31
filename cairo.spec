@@ -2,9 +2,9 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_with	glitz		# build with glitz backend
-%bcond_without	xcb		# XCB backend
+%bcond_with	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_without	lcd             # use own LCD filtering instead of freetype's
+%bcond_with	lcd             # use own LCD filtering instead of freetype's
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
@@ -35,7 +35,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
 %endif
-BuildRequires:	xorg-lib-libXrender-devel >= 0.6
+BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 %{!?with_lcd:Requires:	freetype >= 1:2.1.10}
 %{?with_lcd:Requires:	freetype >= 1:2.3.0}
@@ -81,7 +81,7 @@ Requires:	freetype-devel >= 1:2.1.10
 Requires:	libpng-devel
 %{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
 %{?with_xcb:Requires:	xcb-util-devel >= 0.2}
-Requires:	xorg-lib-libXrender-devel >= 0.6
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
