@@ -2,28 +2,30 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_with	glitz		# build with glitz backend
-%bcond_without	xcb		# XCB backend
+%bcond_with	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_without	lcd             # use own LCD filtering instead of freetype's
+%bcond_with	lcd             # use own LCD filtering instead of freetype's
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.4.10
+Version:	1.4.14
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	5598a5e500ad922e37b159dee72fc993
+# Source0-md5:	e8c442ff821c0719a69508fecba9038f
 Patch0:		%{name}-link.patch
 # updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
-Patch1:		cairo-1.2.4-lcd-filter-1.patch
+# NOTE: this patch wasn't applied upstream, is unmaintained by its author for
+# about a year and becomes more and more ugly => it's subject to drop soon  --q
+Patch1:		%{name}-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake >= 1:1.7
 BuildRequires:	fontconfig-devel
-%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
 %{!?with_lcd:BuildRequires:	freetype-devel >= 1:2.1.10}
+%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
 BuildRequires:	libpng-devel
@@ -33,7 +35,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
 %endif
-BuildRequires:	xorg-lib-libXrender-devel >= 0.6
+BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	zlib-devel
 %{!?with_lcd:Requires:	freetype >= 1:2.1.10}
 %{?with_lcd:Requires:	freetype >= 1:2.3.0}
@@ -79,7 +81,7 @@ Requires:	freetype-devel >= 1:2.1.10
 Requires:	libpng-devel
 %{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
 %{?with_xcb:Requires:	xcb-util-devel >= 0.2}
-Requires:	xorg-lib-libXrender-devel >= 0.6
+Requires:	xrender-devel >= 0.6
 
 %description devel
 Development files for Cairo library.
@@ -109,7 +111,7 @@ Requires:	gtk-doc-common
 Cairo API documentation.
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API Cairo. 
+Dokumentacja API Cairo.
 
 %prep
 %setup -q
@@ -139,6 +141,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{!?with_apidocs:rm -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -149,19 +153,30 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_includedir}/*
-%{_pkgconfigdir}/*.pc
+%attr(755,root,root) %{_libdir}/libcairo.so
+%{_libdir}/libcairo.la
+%{_includedir}/cairo
+%{_pkgconfigdir}/cairo.pc
+%{_pkgconfigdir}/cairo-ft.pc
+%{_pkgconfigdir}/cairo-pdf.pc
+%{_pkgconfigdir}/cairo-png.pc
+%{_pkgconfigdir}/cairo-ps.pc
+%{_pkgconfigdir}/cairo-svg.pc
+%{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
+%{_pkgconfigdir}/cairo-xlib.pc
+%{_pkgconfigdir}/cairo-xlib-xrender.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libcairo.a
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/cairo
+%endif
