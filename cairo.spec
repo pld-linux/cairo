@@ -16,9 +16,11 @@ Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	e8c442ff821c0719a69508fecba9038f
 Patch0:		%{name}-link.patch
-# updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
-# NOTE: this patch wasn't applied upstream, is unmaintained by its author for
-# about a year and becomes more and more ugly => it's subject to drop soon  --q
+# Updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
+# The lcd patch is being maintained at
+# http://bugs.freedesktop.org/show_bug.cgi?id=10301
+# It is not applied upstream for political reasons (patents) and its fate has
+# not been decided yet AFAIK. -- Qrczak
 Patch1:		%{name}-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.54
