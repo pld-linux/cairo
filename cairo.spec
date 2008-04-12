@@ -9,12 +9,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.4.14
-Release:	2
+Version:	1.6.4
+Release:	0.1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	e8c442ff821c0719a69508fecba9038f
+# Source0-md5:	a198d509f9e3a35b78de8bb02174ebb9
 Patch0:		%{name}-link.patch
 # Updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # The lcd patch is being maintained at
@@ -33,6 +33,8 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	pixman-devel >= 0.10.0
+BuildRequires:	poppler-glib-devel >= 0.8.0
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
@@ -133,6 +135,8 @@ Dokumentacja API Cairo.
 	%{?with_glitz:--enable-glitz} \
 	--enable-ps \
 	--enable-pdf \
+	--enable-png \
+	--enable-freetype \
 	--with-html-dir=%{_gtkdocdir}
 %{__make}
 %{?with_tests:%{__make} check}
@@ -154,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
-%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
 
