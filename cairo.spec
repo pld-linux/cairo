@@ -35,8 +35,8 @@ BuildRequires:	fontconfig-devel
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
-BuildRequires:	pkgconfig
 BuildRequires:	pixman-devel >= 0.10.0
+BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.8.0
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
@@ -46,7 +46,7 @@ BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
 %{!?with_lcd:Requires:	freetype >= 1:2.1.10}
 %{?with_lcd:Requires:	freetype >= 1:2.3.0}
-%{?with_glitz:Requires:	glitz >= 0.5.1}
+%{?with_glitz:Requires:	glitz:Requires:	glitz >= 0.5.1}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,6 +87,7 @@ Requires:	freetype-devel >= 1:2.1.10
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
 %{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
+Requires:	pixman-devel >= 0.10.0
 %{?with_xcb:Requires:	xcb-util-devel >= 0.2}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 
