@@ -46,7 +46,7 @@ BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	zlib-devel
 %{!?with_lcd:Requires:	freetype >= 1:2.1.10}
 %{?with_lcd:Requires:	freetype >= 1:2.3.0}
-%{?with_glitz:Requires:	glitz:Requires:	glitz >= 0.5.1}
+%{?with_glitz:Requires:	glitz >= 0.5.1}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
