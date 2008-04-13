@@ -4,7 +4,7 @@
 %bcond_with	glitz		# build with glitz backend
 %bcond_without	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_without	lcd             # use own LCD filtering instead of freetype's
+%bcond_with	lcd             # freetype LCD filtering (instead of internal) [not ready]
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
@@ -16,20 +16,23 @@ Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	a198d509f9e3a35b78de8bb02174ebb9
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-lt.patch
+Patch2:		%{name}-am.patch
 # Updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # The lcd patch is being maintained at
 # http://bugs.freedesktop.org/show_bug.cgi?id=10301
 # It is not applied upstream for political reasons (patents) and its fate has
 # not been decided yet AFAIK. -- Qrczak
-Patch1:		%{name}-1.2.4-lcd-filter-1.patch
+# the latest version is for some early 1.5.x and won't be applied upstream to 1.6.x series
+Patch3:		%{name}-1.2.4-lcd-filter-1.patch
 URL:		http://cairographics.org/
-BuildRequires:	autoconf >= 2.54
-BuildRequires:	automake >= 1:1.7
+BuildRequires:	autoconf >= 2.58
+BuildRequires:	automake >= 1:1.8
 BuildRequires:	fontconfig-devel
 %{!?with_lcd:BuildRequires:	freetype-devel >= 1:2.1.10}
 %{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.3}
+%{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
@@ -120,7 +123,9 @@ Dokumentacja API Cairo.
 %prep
 %setup -q
 %patch0 -p1
-%{?with_lcd:%patch1 -p1}
+%patch1 -p1
+%patch2 -p1
+%{?with_lcd:%patch3 -p1}
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
