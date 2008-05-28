@@ -37,7 +37,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pixman-devel >= 0.10.0
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-glib-devel >= 0.8.0
+BuildRequires:	poppler-glib-devel >= 0.6.0
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
 BuildRequires:	xcb-util-devel >= 0.2
