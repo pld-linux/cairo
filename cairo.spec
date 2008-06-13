@@ -4,13 +4,13 @@
 %bcond_with	glitz		# build with glitz backend
 %bcond_without	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_with	lcd             # freetype LCD filtering (instead of internal) [not ready]
+%bcond_without	lcd             # freetype LCD filtering (instead of internal)
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.6.4
-Release:	1
+Release:	2
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -18,13 +18,9 @@ Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-lt.patch
 Patch2:		%{name}-am.patch
-# Updated from http://david.freetype.org/lcd/cairo-1.2.4-lcd-filter-1.patch
 # The lcd patch is being maintained at
 # http://bugs.freedesktop.org/show_bug.cgi?id=10301
-# It is not applied upstream for political reasons (patents) and its fate has
-# not been decided yet AFAIK. -- Qrczak
-# the latest version is for some early 1.5.x and won't be applied upstream to 1.6.x series
-Patch3:		%{name}-1.2.4-lcd-filter-1.patch
+Patch3:		%{name}-lcd-filter.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.58
 BuildRequires:	automake >= 1:1.8
