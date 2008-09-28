@@ -1,41 +1,34 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_with		glitz		# build with glitz backend
+%bcond_with	glitz		# build with glitz backend
 %if "%{pld_release}" == "ac"
-%bcond_with		xcb			# XCB backend
+%bcond_with	xcb		# XCB backend
 %else
-%bcond_without	xcb			# XCB backend
+%bcond_without	xcb		# XCB backend
 %endif
-%bcond_with	tests			# perform tests (can fail due to out of memory)
-%bcond_without	lcd			# freetype LCD filtering (instead of internal)
-
+%bcond_with	tests		# perform tests (can fail due to out of memory)
+#
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.6.4
-Release:	3
+Version:	1.8.0
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	a198d509f9e3a35b78de8bb02174ebb9
+# Source0-md5:	4ea70ea87b47e92d318d4e7f5b940f47
 Patch0:		%{name}-link.patch
-Patch1:		%{name}-lt.patch
-Patch2:		%{name}-am.patch
-# The lcd patch is being maintained at
-# http://bugs.freedesktop.org/show_bug.cgi?id=10301
-Patch3:		%{name}-lcd-filter.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.58
 BuildRequires:	automake >= 1:1.8
 BuildRequires:	fontconfig-devel
-%{!?with_lcd:BuildRequires:	freetype-devel >= 1:2.1.10}
-%{?with_lcd:BuildRequires:	freetype-devel >= 1:2.3.0}
+BuildRequires:	freetype-devel >= 1:2.3.0
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel
 BuildRequires:	libtool
-BuildRequires:	pixman-devel >= 0.10.0
+BuildRequires:	pixman-devel >= 0.12.0
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.8.0
 BuildRequires:	rpm >= 4.4.9-56
@@ -49,9 +42,9 @@ BuildRequires:	xrender-devel >= 0.6
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 %endif
 BuildRequires:	zlib-devel
-%{!?with_lcd:Requires:	freetype >= 1:2.1.10}
-%{?with_lcd:Requires:	freetype >= 1:2.3.0}
+Requires:	freetype >= 1:2.3.0
 %{?with_glitz:Requires:	glitz >= 0.5.1}
+Requires:	pixman >= 0.12.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -88,11 +81,11 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel
-Requires:	freetype-devel >= 1:2.1.10
+Requires:	freetype-devel >= 1:2.3.0
 %{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel
 %{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
-Requires:	pixman-devel >= 0.10.0
+Requires:	pixman-devel >= 0.12.0
 %{?with_xcb:Requires:	xcb-util-devel >= 0.2}
 %if "%{pld_release}" == "ac"
 Requires:	xrender-devel >= 0.6
@@ -133,14 +126,11 @@ Dokumentacja API Cairo.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%{?with_lcd:%patch3 -p1}
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I build
 %{__autoheader}
 %{__autoconf}
 %{__automake}
