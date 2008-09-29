@@ -135,13 +135,13 @@ Dokumentacja API Cairo.
 %{__autoconf}
 %{__automake}
 %configure \
-	%{?with_apidocs:--enable-gtk-doc} \
-	%{?with_xcb:--enable-xcb} \
+	--enable-freetype \
 	%{?with_glitz:--enable-glitz} \
-	--enable-ps \
+	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-pdf \
 	--enable-png \
-	--enable-freetype \
+	--enable-ps \
+	%{?with_xcb:--enable-xcb} \
 	--with-html-dir=%{_gtkdocdir}
 %{__make}
 %{?with_tests:%{__make} check}
