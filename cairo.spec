@@ -8,6 +8,7 @@
 %bcond_without	xcb		# XCB backend
 %endif
 %bcond_with	tests		# perform tests (can fail due to out of memory)
+%bcond_without	poppler		# PDF backend
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
@@ -30,7 +31,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pixman-devel >= 0.12.0
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-glib-devel >= 0.8.0
+%{?with_poppler:BuildRequires:	poppler-glib-devel >= 0.8.0}
 BuildRequires:	rpm >= 4.4.9-56
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
@@ -48,7 +49,7 @@ Requires:	pixman >= 0.12.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Cairo provides anti-aliased vector-based rendering for X. Paths
+iCairo provides anti-aliased vector-based rendering for X. Paths
 consist of line segments and cubic splines and can be rendered at any
 width with various join and cap styles. All colors may be specified
 with optional translucence (opacity/alpha) and combined using the
@@ -138,7 +139,7 @@ Dokumentacja API Cairo.
 	--enable-freetype \
 	%{?with_glitz:--enable-glitz} \
 	%{?with_apidocs:--enable-gtk-doc} \
-	--enable-pdf \
+	--enable-pdf=%{?with_poppler:yes}%{!?with_poppler:no} \
 	--enable-png \
 	--enable-ps \
 	%{?with_xcb:--enable-xcb} \
@@ -174,7 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
 %{_pkgconfigdir}/cairo-ft.pc
-%{_pkgconfigdir}/cairo-pdf.pc
+%{?with_poppler:%{_pkgconfigdir}/cairo-pdf.pc}
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
 %{_pkgconfigdir}/cairo-svg.pc
