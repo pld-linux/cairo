@@ -49,7 +49,7 @@ Requires:	pixman >= 0.12.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-iCairo provides anti-aliased vector-based rendering for X. Paths
+Cairo provides anti-aliased vector-based rendering for X. Paths
 consist of line segments and cubic splines and can be rendered at any
 width with various join and cap styles. All colors may be specified
 with optional translucence (opacity/alpha) and combined using the
