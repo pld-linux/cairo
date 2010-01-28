@@ -8,13 +8,12 @@
 %bcond_without	xcb		# XCB backend
 %endif
 %bcond_with	tests		# perform tests (can fail due to out of memory)
-%bcond_without	poppler		# PDF backend
 #
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.8.8
-Release:	4
+Release:	5
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -31,7 +30,6 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtool
 BuildRequires:	pixman-devel >= 0.12.0
 BuildRequires:	pkgconfig
-%{?with_poppler:BuildRequires:	poppler-glib-devel >= 0.8.0}
 BuildRequires:	rpm >= 4.4.9-56
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
@@ -139,7 +137,7 @@ Dokumentacja API Cairo.
 	--enable-freetype \
 	%{?with_glitz:--enable-glitz} \
 	%{?with_apidocs:--enable-gtk-doc} \
-	--enable-pdf=%{?with_poppler:yes}%{!?with_poppler:no} \
+	--enable-pdf=yes \
 	--enable-png \
 	--enable-ps \
 	%{?with_xcb:--enable-xcb} \
@@ -175,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
 %{_pkgconfigdir}/cairo-ft.pc
-%{?with_poppler:%{_pkgconfigdir}/cairo-pdf.pc}
+%{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
 %{_pkgconfigdir}/cairo-svg.pc
