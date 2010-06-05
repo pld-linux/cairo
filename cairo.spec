@@ -27,6 +27,7 @@ BuildRequires:	freetype-devel >= 1:2.3.0
 %{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel >= 2:1.4.0
+BuildRequires:	librsvg-devel >= 2.15.0
 BuildRequires:	libtool
 BuildRequires:	pixman-devel >= 0.12.0
 BuildRequires:	pkgconfig
