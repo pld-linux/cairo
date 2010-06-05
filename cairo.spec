@@ -175,6 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libcairo.la
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
+%{?with_glitz:%{_pkgconfigdir}/cairo-glitz.pc}
 %{_pkgconfigdir}/cairo-ft.pc
 %{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
