@@ -28,9 +28,11 @@ BuildRequires:	freetype-devel >= 1:2.3.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	librsvg-devel >= 2.15.0
+BuildRequires:	libspectre-devel
 BuildRequires:	libtool
 BuildRequires:	pixman-devel >= 0.12.0
 BuildRequires:	pkgconfig
+BuildRequires:	poppler-glib-devel >= 0.9.2
 BuildRequires:	rpm >= 4.4.9-56
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 0.9.92
