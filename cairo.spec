@@ -156,8 +156,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{!?with_apidocs:rm -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -199,7 +197,9 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
+%{_libdir}/libcairo.la
 %{_libdir}/libcairo-script-interpreter.a
+%{_libdir}/libcairo-script-interpreter.la
 
 %if %{with apidocs}
 %files apidocs
