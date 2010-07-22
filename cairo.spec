@@ -178,7 +178,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo.so
+%{_libdir}/libcairo.la
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
+%{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
 %{?with_glitz:%{_pkgconfigdir}/cairo-glitz.pc}
@@ -197,9 +199,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
-%{_libdir}/libcairo.la
 %{_libdir}/libcairo-script-interpreter.a
-%{_libdir}/libcairo-script-interpreter.la
 
 %if %{with apidocs}
 %files apidocs
