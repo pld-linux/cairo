@@ -12,12 +12,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.9.12
+Version:	1.9.14
 Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
-# Source0-md5:	0a264bb080af8346f7ae25581f59f661
+# Source0-md5:	885951f646e6e1b2d4819734d24b1656
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.58
@@ -178,6 +178,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo.so
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so
 %{_libdir}/libcairo.la
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
 %{_libdir}/libcairo-script-interpreter.la
