@@ -12,12 +12,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.8.10
-Release:	2
+Version:	1.10.0
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	b60a82f405f9400bbfdcf850b1728d25
+# Source0-md5:	70a2ece66cf473d976e2db0f75bf199e
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.58
@@ -166,28 +166,48 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
 %doc AUTHORS COPYING ChangeLog NEWS README
+%attr(755,root,root) %{_bindir}/cairo-trace
 %attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
+%attr(755,root,root) %{_libdir}/libcairo-gobject.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcairo-gobject.so.2
+%attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcairo-script-interpreter.so.2
+%dir %{_libdir}/cairo
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo.so
+%attr(755,root,root) %{_libdir}/libcairo-gobject.so
+%attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so
 %{_libdir}/libcairo.la
+%{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
 %{?with_glitz:%{_pkgconfigdir}/cairo-glitz.pc}
+%{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
+%{_pkgconfigdir}/cairo-gobject.pc
 %{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
 %{_pkgconfigdir}/cairo-svg.pc
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
+%{?with_xcb:%{_pkgconfigdir}/cairo-xcb-shm.pc}
 %{_pkgconfigdir}/cairo-xlib.pc
 %{_pkgconfigdir}/cairo-xlib-xrender.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
+%{_libdir}/libcairo-gobject.a
+%{_libdir}/libcairo-gobject.la
+%{_libdir}/libcairo-script-interpreter.a
 
 %if %{with apidocs}
 %files apidocs
