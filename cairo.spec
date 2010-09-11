@@ -13,7 +13,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.10.0
-Release:	1
+Release:	2
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -166,22 +166,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
 %doc AUTHORS COPYING ChangeLog NEWS README
-%attr(755,root,root) %{_bindir}/cairo-trace
 %attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
 %attr(755,root,root) %{_libdir}/libcairo-gobject.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo-gobject.so.2
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo-script-interpreter.so.2
-%dir %{_libdir}/cairo
-%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/cairo-trace
 %attr(755,root,root) %{_libdir}/libcairo.so
 %attr(755,root,root) %{_libdir}/libcairo-gobject.so
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
+%dir %{_libdir}/cairo
 %attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
 %attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so
