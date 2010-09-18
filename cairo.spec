@@ -1,7 +1,7 @@
+# TODO: qt, drm/gallium, gl backends?
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_with	glitz		# build with glitz backend
 %if "%{pld_release}" == "ac"
 %bcond_with	xcb		# XCB backend
 %else
@@ -20,33 +20,32 @@ Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	70a2ece66cf473d976e2db0f75bf199e
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
-BuildRequires:	autoconf >= 2.58
-BuildRequires:	automake >= 1:1.8
-BuildRequires:	fontconfig-devel
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake >= 1:1.9.6
+BuildRequires:	fontconfig-devel >= 2.2.95
 BuildRequires:	freetype-devel >= 1:2.3.0
-%{?with_glitz:BuildRequires:	glitz-devel >= 0.5.1}
+BuildRequires:	glib2-devel >= 1:2.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	librsvg-devel >= 2.15.0
-BuildRequires:	libspectre-devel
-BuildRequires:	libtool
-BuildRequires:	pixman-devel >= 0.12.0
+BuildRequires:	libspectre-devel >= 0.2.0
+BuildRequires:	libtool >= 1.4
+BuildRequires:	pixman-devel >= 0.18.4
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-glib-devel >= 0.9.2
+BuildRequires:	poppler-glib-devel >= 0.13.3
 BuildRequires:	rpm >= 4.4.9-56
 %if %{with xcb}
-BuildRequires:	libxcb-devel >= 0.9.92
-BuildRequires:	xcb-util-devel >= 0.2
+BuildRequires:	libxcb-devel >= 1.4
 %endif
 %if "%{pld_release}" == "ac"
 BuildRequires:	xrender-devel >= 0.6
 %else
+BuildRequires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 %endif
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.3.0
-%{?with_glitz:Requires:	glitz >= 0.5.1}
-Requires:	pixman >= 0.12.0
+Requires:	pixman >= 0.18.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -82,16 +81,15 @@ Summary:	Development files for Cairo library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	fontconfig-devel
+Requires:	fontconfig-devel >= 2.2.95
 Requires:	freetype-devel >= 1:2.3.0
-%{?with_glitz:Requires:	glitz-devel >= 0.5.1}
 Requires:	libpng-devel >= 2:1.4.0
-%{?with_xcb:Requires:	libxcb-devel >= 0.9.92}
-Requires:	pixman-devel >= 0.12.0
-%{?with_xcb:Requires:	xcb-util-devel >= 0.2}
+%{?with_xcb:Requires:	libxcb-devel >= 1.4}
+Requires:	pixman-devel >= 0.18.4
 %if "%{pld_release}" == "ac"
 Requires:	xrender-devel >= 0.6
 %else
+Requires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
 Requires:	xorg-lib-libXrender-devel >= 0.6
 %endif
 
@@ -137,10 +135,10 @@ Dokumentacja API Cairo.
 %{__autoconf}
 %{__automake}
 %configure \
+	--disable-silent-rules \
 	--enable-freetype \
-	%{?with_glitz:--enable-glitz} \
 	%{?with_apidocs:--enable-gtk-doc} \
-	--enable-pdf=yes \
+	--enable-pdf \
 	--enable-png \
 	--enable-ps \
 	%{?with_xcb:--enable-xcb} \
@@ -187,7 +185,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
 %{_pkgconfigdir}/cairo.pc
-%{?with_glitz:%{_pkgconfigdir}/cairo-glitz.pc}
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
 %{_pkgconfigdir}/cairo-gobject.pc
