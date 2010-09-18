@@ -1,4 +1,3 @@
-# TODO: qt, drm/gallium, gl backends?
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
@@ -31,7 +30,7 @@ BuildRequires:	librsvg-devel >= 2.15.0
 BuildRequires:	libspectre-devel >= 0.2.0
 BuildRequires:	libtool >= 1.4
 BuildRequires:	pixman-devel >= 0.18.4
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 1:0.9
 BuildRequires:	poppler-glib-devel >= 0.13.3
 BuildRequires:	rpm >= 4.4.9-56
 %if %{with xcb}
@@ -111,6 +110,56 @@ Static Cairo library.
 %description static -l pl.UTF-8
 Statyczna biblioteka Cairo.
 
+%package gobject
+Summary:	GObject functions library for Cairo graphics library
+Summary(pl.UTF-8):	Biblioteka funkcji GObject dla biblioteki graficznej Cairo
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description gobject
+GObject functions library for Cairo graphics library.
+
+%description gobject -l pl.UTF-8
+Biblioteka funkcji GObject dla biblioteki graficznej Cairo.
+
+%package gobject-devel
+Summary:	Header files for Cairo GObject library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Cairo GObject
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gobject = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.0
+
+%description gobject-devel
+Header files for Cairo GObject library.
+
+%description gobject-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki Cairo GObject.
+
+%package gobject-static
+Summary:	Static Cairo GObject library
+Summary(pl.UTF-8):	Statyczna biblioteka Cairo GObject
+Group:		Development/Libraries
+Requires:	%{name}-gobject-devel = %{version}-%{release}
+
+%description gobject-static
+Static Cairo GObject library.
+
+%description gobject-static -l pl.UTF-8
+Statyczna biblioteka Cairo GObject.
+
+%package trace
+Summary:	Cairo calls tracing utility
+Summary(pl.UTF-8):	Narzędzie do śledzenia wywołań Cairo
+Group:		Development/Tools
+Requires:	%{name} = %{version}-%{release}
+
+%description trace
+Cairo calls tracing utility.
+
+%description trace -l pl.UTF-8
+Narzędzie do śledzenia wywołań Cairo.
+
 %package apidocs
 Summary:	Cairo API documentation
 Summary(pl.UTF-8):	Dokumentacja API Cairo
@@ -152,6 +201,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# LD_PRELOADable library
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-trace.{la,a}
+
 %{!?with_apidocs:rm -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
 
 %clean
@@ -160,34 +212,29 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	gobject -p /sbin/ldconfig
+%postun	gobject -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 # COPYING contains only notes, not LGPL/MPL texts
 %doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libcairo.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo.so.2
-%attr(755,root,root) %{_libdir}/libcairo-gobject.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcairo-gobject.so.2
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libcairo-script-interpreter.so.2
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/cairo-trace
 %attr(755,root,root) %{_libdir}/libcairo.so
-%attr(755,root,root) %{_libdir}/libcairo-gobject.so
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
-%dir %{_libdir}/cairo
-%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/cairo/libcairo-trace.so.0
-%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so
 %{_libdir}/libcairo.la
 %{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
+%exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
-%{_pkgconfigdir}/cairo-gobject.pc
 %{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
@@ -200,9 +247,29 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
-%{_libdir}/libcairo-gobject.a
-%{_libdir}/libcairo-gobject.la
 %{_libdir}/libcairo-script-interpreter.a
+
+%files gobject
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libcairo-gobject.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcairo-gobject.so.2
+
+%files gobject-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libcairo-gobject.so
+%{_libdir}/libcairo-gobject.la
+%{_includedir}/cairo/cairo-gobject.h
+%{_pkgconfigdir}/cairo-gobject.pc
+
+%files gobject-static
+%defattr(644,root,root,755)
+%{_libdir}/libcairo-gobject.a
+
+%files trace
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/cairo-trace
+%dir %{_libdir}/cairo
+%attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so*
 
 %if %{with apidocs}
 %files apidocs
