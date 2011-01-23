@@ -12,7 +12,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.10.2
-Release:	3
+Release:	4
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
@@ -33,6 +33,7 @@ BuildRequires:	pixman-devel >= 0.18.4
 BuildRequires:	pkgconfig >= 1:0.9
 BuildRequires:	poppler-glib-devel >= 0.13.3
 BuildRequires:	rpm >= 4.4.9-56
+BuildRequires:	sed >= 4.0
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 1.4
 %endif
@@ -82,7 +83,6 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel >= 2.2.95
 Requires:	freetype-devel >= 1:2.3.0
-Requires:	glib2-devel >= 1:2.0
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.4}
 Requires:	pixman-devel >= 0.18.4
@@ -193,6 +193,9 @@ Dokumentacja API Cairo.
 	--enable-ps \
 	%{?with_xcb:--enable-xcb} \
 	--with-html-dir=%{_gtkdocdir}
+
+%{__sed} -i 's/gobject-2.0 glib-2.0//' src/cairo.pc
+
 %{__make}
 %{?with_tests:%{__make} check}
 
