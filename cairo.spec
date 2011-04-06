@@ -32,7 +32,7 @@ BuildRequires:	libspectre-devel >= 0.2.0
 BuildRequires:	libtool >= 1.4
 BuildRequires:	pixman-devel >= 0.18.4
 BuildRequires:	pkgconfig >= 1:0.9
-BuildRequires:	poppler-glib-devel >= 0.13.3
+%{?with_tests:BuildRequires:	poppler-glib-devel >= 0.13.3}
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	sed >= 4.0
 %if %{with xcb}
