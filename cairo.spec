@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
+%bcond_without	svg		# disable SVG support (to boostrap librsvg)
 %if "%{pld_release}" == "ac"
 %bcond_with	xcb		# XCB backend
 %else
@@ -26,7 +27,7 @@ BuildRequires:	freetype-devel >= 1:2.3.0
 BuildRequires:	glib2-devel >= 1:2.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
 BuildRequires:	libpng-devel >= 2:1.4.0
-BuildRequires:	librsvg-devel >= 2.15.0
+%{?with_svg:BuildRequires:	librsvg-devel >= 2.15.0}
 BuildRequires:	libspectre-devel >= 0.2.0
 BuildRequires:	libtool >= 1.4
 BuildRequires:	pixman-devel >= 0.18.4
@@ -191,6 +192,7 @@ Dokumentacja API Cairo.
 	--enable-pdf \
 	--enable-png \
 	--enable-ps \
+	%{!?with_svg:--disable-svg} \
 	--enable-tee \
 	%{?with_xcb:--enable-xcb} \
 	--with-html-dir=%{_gtkdocdir}
@@ -243,7 +245,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
-%{_pkgconfigdir}/cairo-svg.pc
+%{?with_svg:%{_pkgconfigdir}/cairo-svg.pc}
 %{_pkgconfigdir}/cairo-tee.pc
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb-shm.pc}
