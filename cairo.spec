@@ -35,6 +35,7 @@ BuildRequires:	pkgconfig >= 1:0.9
 %{?with_tests:BuildRequires:	poppler-glib-devel >= 0.13.3}
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	sed >= 4.0
+BuildRequires:	binutils-devel
 %if %{with xcb}
 BuildRequires:	libxcb-devel >= 1.4
 %endif
@@ -155,6 +156,7 @@ Summary:	Cairo calls tracing utility
 Summary(pl.UTF-8):	Narzędzie do śledzenia wywołań Cairo
 Group:		Development/Tools
 Requires:	%{name} = %{version}-%{release}
+Requires:	binutils-libs >= 2.21.53
 
 %description trace
 Cairo calls tracing utility.
@@ -187,7 +189,7 @@ Dokumentacja API Cairo.
 %{__automake}
 %configure \
 	--disable-silent-rules \
-	--enable-freetype \
+	--enable-ft \
 	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-pdf \
 	--enable-png \
