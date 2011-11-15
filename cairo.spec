@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	svg		# disable SVG support (to boostrap librsvg)
+%bcond_with	gl		# enable OpenGL support
 %if "%{pld_release}" == "ac"
 %bcond_with	xcb		# XCB backend
 %else
@@ -190,6 +191,7 @@ Dokumentacja API Cairo.
 %configure \
 	--disable-silent-rules \
 	--enable-ft \
+	%{?with_gl:--enable-gl=yes}\
 	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-pdf \
 	--enable-png \
@@ -242,6 +244,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
+%{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
+%{?with_gl:%{_pkgconfigdir}/cairo-glx.pc}
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
 %{_pkgconfigdir}/cairo-pdf.pc
