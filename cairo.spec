@@ -13,16 +13,17 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.10.2
-Release:	14
+Version:	1.12.0
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	f101a9e88b783337b20b2e26dfd26d5f
+# Source0-md5:	e6c85575ba7094f88b637bdfd835a751
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.9.6
+BuildRequires:	binutils-devel
 BuildRequires:	fontconfig-devel >= 2.2.95
 BuildRequires:	freetype-devel >= 1:2.3.0
 BuildRequires:	glib2-devel >= 1:2.0
@@ -31,14 +32,13 @@ BuildRequires:	libpng-devel >= 2:1.4.0
 %{?with_svg:BuildRequires:	librsvg-devel >= 2.15.0}
 BuildRequires:	libspectre-devel >= 0.2.0
 BuildRequires:	libtool >= 1.4
-BuildRequires:	pixman-devel >= 0.18.4
+BuildRequires:	pixman-devel >= 0.22.0
 BuildRequires:	pkgconfig >= 1:0.9
-%{?with_tests:BuildRequires:	poppler-glib-devel >= 0.13.3}
+%{?with_tests:BuildRequires:	poppler-glib-devel >= 0.17.4}
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	sed >= 4.0
-BuildRequires:	binutils-devel
 %if %{with xcb}
-BuildRequires:	libxcb-devel >= 1.4
+BuildRequires:	libxcb-devel >= 1.6
 %endif
 %if "%{pld_release}" == "ac"
 BuildRequires:	xrender-devel >= 0.6
@@ -48,7 +48,8 @@ BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 %endif
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.3.0
-Requires:	pixman >= 0.18.4
+%{?with_xcb:Requires:	libxcb >= 1.6}
+Requires:	pixman >= 0.22.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,8 +88,8 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	fontconfig-devel >= 2.2.95
 Requires:	freetype-devel >= 1:2.3.0
 Requires:	libpng-devel >= 2:1.4.0
-%{?with_xcb:Requires:	libxcb-devel >= 1.4}
-Requires:	pixman-devel >= 0.18.4
+%{?with_xcb:Requires:	libxcb-devel >= 1.6}
+Requires:	pixman-devel >= 0.22.0
 %if "%{pld_release}" == "ac"
 Requires:	xrender-devel >= 0.6
 %else
@@ -153,17 +154,17 @@ Static Cairo GObject library.
 Statyczna biblioteka Cairo GObject.
 
 %package trace
-Summary:	Cairo calls tracing utility
-Summary(pl.UTF-8):	Narzędzie do śledzenia wywołań Cairo
+Summary:	Cairo calls tracing utilities
+Summary(pl.UTF-8):	Narzędzia do śledzenia wywołań Cairo
 Group:		Development/Tools
 Requires:	%{name} = %{version}-%{release}
 Requires:	binutils-libs >= 2.21.53
 
 %description trace
-Cairo calls tracing utility.
+Cairo calls tracing utilities.
 
 %description trace -l pl.UTF-8
-Narzędzie do śledzenia wywołań Cairo.
+Narzędzia do śledzenia wywołań Cairo.
 
 %package apidocs
 Summary:	Cairo API documentation
@@ -214,8 +215,10 @@ rm -rf $RPM_BUILD_ROOT
 
 # LD_PRELOADable library
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-trace.{la,a}
+# LD_PRELOADable modules(?)
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/cairo-{fdr,sphinx}.{la,a}
 
-%{!?with_apidocs:rm -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
+%{!?with_apidocs:%{__rm} -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -251,6 +254,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cairo-pdf.pc
 %{_pkgconfigdir}/cairo-png.pc
 %{_pkgconfigdir}/cairo-ps.pc
+%{_pkgconfigdir}/cairo-script.pc
 %{?with_svg:%{_pkgconfigdir}/cairo-svg.pc}
 %{_pkgconfigdir}/cairo-tee.pc
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
@@ -281,8 +285,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files trace
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/cairo-sphinx
 %attr(755,root,root) %{_bindir}/cairo-trace
 %dir %{_libdir}/cairo
+%attr(755,root,root) %{_libdir}/cairo/cairo-fdr.so*
+%attr(755,root,root) %{_libdir}/cairo/cairo-sphinx.so*
 %attr(755,root,root) %{_libdir}/cairo/libcairo-trace.so*
 
 %if %{with apidocs}
