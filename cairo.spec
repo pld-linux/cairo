@@ -21,31 +21,31 @@ Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
 # Source0-md5:	87649eb75789739d517c743e94879e51
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake >= 1:1.9.6
+BuildRequires:	autoconf >= 2.63
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	binutils-devel
 BuildRequires:	fontconfig-devel >= 2.2.95
 BuildRequires:	freetype-devel >= 1:2.3.0
 BuildRequires:	glib2-devel >= 1:2.0
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.6}
+%{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
 BuildRequires:	libpng-devel >= 2:1.4.0
 %{?with_svg:BuildRequires:	librsvg-devel >= 2.15.0}
 BuildRequires:	libspectre-devel >= 0.2.0
-BuildRequires:	libtool >= 1.4
+BuildRequires:	libtool >= 2:2.2
+%{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
 BuildRequires:	pixman-devel >= 0.22.0
 BuildRequires:	pkgconfig >= 1:0.9
 %{?with_tests:BuildRequires:	poppler-glib-devel >= 0.17.4}
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	sed >= 4.0
-%if %{with xcb}
-BuildRequires:	libxcb-devel >= 1.6
-%endif
+BuildRequires:	tar >= 1:1.22
 %if "%{pld_release}" == "ac"
 BuildRequires:	xrender-devel >= 0.6
 %else
 BuildRequires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 %endif
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	freetype >= 1:2.3.0
 %{?with_xcb:Requires:	libxcb >= 1.6}
