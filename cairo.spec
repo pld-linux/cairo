@@ -14,7 +14,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.12.2
-Release:	5
+Release:	6
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
@@ -218,6 +218,8 @@ rm -rf $RPM_BUILD_ROOT
 # LD_PRELOADable modules(?)
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/cairo-{fdr,sphinx}.{la,a}
 
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+
 %{!?with_apidocs:%{__rm} -rf $RPM_BUILD_ROOT%{_gtkdocdir}/cairo}
 
 %clean
@@ -242,8 +244,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo.so
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
-%{_libdir}/libcairo.la
-%{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
@@ -275,7 +275,6 @@ rm -rf $RPM_BUILD_ROOT
 %files gobject-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo-gobject.so
-%{_libdir}/libcairo-gobject.la
 %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo-gobject.pc
 
