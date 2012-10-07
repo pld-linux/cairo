@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	svg		# disable SVG support (to boostrap librsvg)
-%bcond_with	gl		# enable OpenGL support
+%bcond_without	gl		# enable OpenGL support
 %if "%{pld_release}" == "ac"
 %bcond_with	xcb		# XCB backend
 %else
@@ -13,12 +13,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.12.2
-Release:	10
+Version:	1.12.4
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	87649eb75789739d517c743e94879e51
+# Source0-md5:	a64bb8774a1e476e5cdd69e635794dfb
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 BuildRequires:	autoconf >= 2.63
@@ -247,6 +247,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
+%{?with_gl:%{_pkgconfigdir}/cairo-egl.pc}
 %{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
 %{?with_gl:%{_pkgconfigdir}/cairo-glx.pc}
 %{_pkgconfigdir}/cairo-fc.pc
