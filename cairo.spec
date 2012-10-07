@@ -1,8 +1,16 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
-%bcond_without	svg		# disable SVG support (to boostrap librsvg)
-%bcond_without	gl		# enable OpenGL support
+%bcond_with	cogl		# Cogl surface backend [incompatible with cogl 1.12.x]
+%bcond_with	directfb	# DirectFB surface backend
+%bcond_with	drm		# DRM surface backend
+%bcond_without	gl		# OpenGL surface backend
+%bcond_with	glesv2		# OpenGLESv2 surface backend (mutually exclusive with gl)
+%bcond_with	openvg		# OpenVG surface backend
+%bcond_without	pdf		# PDF surface backend
+%bcond_without	ps		# PS surface backend
+%bcond_without	svg		# SVG surface backend (disable to boostrap librsvg)
+%bcond_with	qt		# Qt surface backend [expects qt_draw_glyphs() API in Qt 4.7+]
 %if "%{pld_release}" == "ac"
 %bcond_with	xcb		# XCB backend
 %else
@@ -10,6 +18,9 @@
 %endif
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 #
+%if %{with glesv2}
+%undefine	with_gl
+%endif
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
@@ -21,34 +32,58 @@ Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
 # Source0-md5:	a64bb8774a1e476e5cdd69e635794dfb
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
+%{?with_directfb:BuildRequires:	DirectFB-devel}
+%if %{with gl} || %{with glesv2} || %{with openvg}
+BuildRequires:	EGL-devel >= 1.1
+%endif
+%if %{with gl} || %{with openvg}
+BuildRequires:	OpenGL-GLX-devel
+%endif
+%{?with_gl:BuildRequires:	OpenGL-devel}
+%{?with_glesv2:BuildRequires:	OpenGLESv2-devel >= 2.0}
+%{?with_openvg:BuildRequires:	OpenVG-devel}
+%{?with_qt:BuildRequires:	QtGui-devel >= 4.4.0}
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	binutils-devel
+%{?with_cogl:BuildRequires:	cogl-devel}
 BuildRequires:	fontconfig-devel >= 2.2.95
 BuildRequires:	freetype-devel >= 1:2.3.0
 BuildRequires:	glib2-devel >= 1:2.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
+%{?with_drm:BuildRequires:	libdrm-devel}
 BuildRequires:	libpng-devel >= 2:1.4.0
-%{?with_svg:BuildRequires:	librsvg-devel >= 2.15.0}
+%if %{with svg} && %{with tests}
+BuildRequires:	librsvg-devel >= 2.15.0
+%endif
+%if %{with ps} && %{with tests}
 BuildRequires:	libspectre-devel >= 0.2.0
+%endif
 BuildRequires:	libtool >= 2:2.2
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
 BuildRequires:	pixman-devel >= 0.22.0
 BuildRequires:	pkgconfig >= 1:0.9
-%{?with_tests:BuildRequires:	poppler-glib-devel >= 0.17.4}
+%if %{with pdf} && %{with tests}
+BuildRequires:	poppler-glib-devel >= 0.17.4
+%endif
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
+%{?with_drm:BuildRequires:	udev-devel >= 1:136}
 %if "%{pld_release}" == "ac"
 BuildRequires:	xrender-devel >= 0.6
 %else
 BuildRequires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
+BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 %endif
 BuildRequires:	xz
 BuildRequires:	zlib-devel
+%{?with_qt:Requires:	QtGui >= 4.4.0}
+Requires:	fontconfig-libs >= 2.2.95
 Requires:	freetype >= 1:2.3.0
 %{?with_xcb:Requires:	libxcb >= 1.6}
+%{?with_drm:Requires:	udev-libs >= 1:136}
 Requires:	pixman >= 0.22.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -85,17 +120,30 @@ Summary:	Development files for Cairo library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_directfb:Requires:	DirectFB-devel}
+%if %{with gl} || %{with glesv2} || %{with openvg}
+Requires:	EGL-devel >= 1.1
+%endif
+%{?with_gl:Requires:	OpenGL-devel}
+%{?with_glesv2:Requires:	OpenGLESv2-devel >= 2.0}
+%{?with_openvg:Requires:	OpenVG-devel}
+%{?with_qt:Requires:	QtGui-devel >= 4.4.0}
+%{?with_cogl:Requires:	cogl-devel}
 Requires:	fontconfig-devel >= 2.2.95
 Requires:	freetype-devel >= 1:2.3.0
+%{?with_drm:Requires:	libdrm-devel}
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
 Requires:	pixman-devel >= 0.22.0
+%{?with_drm:Requires:	udev-devel >= 1:136}
 %if "%{pld_release}" == "ac"
 Requires:	xrender-devel >= 0.6
 %else
 Requires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
+Requires:	xorg-lib-libXext-devel
 Requires:	xorg-lib-libXrender-devel >= 0.6
 %endif
+Requires:	zlib-devel
 
 %description devel
 Development files for Cairo library.
@@ -191,15 +239,21 @@ Dokumentacja API Cairo.
 %{__automake}
 %configure \
 	--disable-silent-rules \
+	%{?with_cogl:--enable-cogl} \
+	%{?with_directfb:--enable-directfb} \
 	--enable-ft \
-	%{?with_gl:--enable-gl=yes}\
+	%{?with_gl:--enable-gl} \
+	%{?with_glesv2:--enable-glesv2} \
 	%{?with_apidocs:--enable-gtk-doc} \
-	--enable-pdf \
+	%{?with_pdf:--enable-pdf} \
 	--enable-png \
-	--enable-ps \
+	%{?with_ps:--enable-ps} \
+	%{?with_qt:--enable-qt} \
 	%{!?with_svg:--disable-svg} \
 	--enable-tee \
+	%{?with_openvg:--enable-vg} \
 	%{?with_xcb:--enable-xcb} \
+	--enable-xml \
 	--with-html-dir=%{_gtkdocdir}
 
 %{__sed} -i 's/gobject-2.0 glib-2.0//' src/cairo.pc
@@ -247,21 +301,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
-%{?with_gl:%{_pkgconfigdir}/cairo-egl.pc}
-%{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
-%{?with_gl:%{_pkgconfigdir}/cairo-glx.pc}
+%{?with_directfb:%{_pkgconfigdir}/cairo-directfb.pc}
+%if %{with gl} || %{with glesv2} || %{with openvg}
+%{_pkgconfigdir}/cairo-egl.pc
+%endif
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
-%{_pkgconfigdir}/cairo-pdf.pc
+%{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
+%if %{with gl} || %{with openvg}
+%{_pkgconfigdir}/cairo-glx.pc
+%endif
+%{?with_pdf:%{_pkgconfigdir}/cairo-pdf.pc}
 %{_pkgconfigdir}/cairo-png.pc
-%{_pkgconfigdir}/cairo-ps.pc
+%{?with_ps:%{_pkgconfigdir}/cairo-ps.pc}
+%{?with_qt:%{_pkgconfigdir}/cairo-qt.pc}
 %{_pkgconfigdir}/cairo-script.pc
 %{?with_svg:%{_pkgconfigdir}/cairo-svg.pc}
 %{_pkgconfigdir}/cairo-tee.pc
+%{?with_openvg:%{_pkgconfigdir}/cairo-vg.pc}
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb.pc}
 %{?with_xcb:%{_pkgconfigdir}/cairo-xcb-shm.pc}
 %{_pkgconfigdir}/cairo-xlib.pc
 %{_pkgconfigdir}/cairo-xlib-xrender.pc
+%{_pkgconfigdir}/cairo-xml.pc
 
 %files static
 %defattr(644,root,root,755)
