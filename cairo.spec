@@ -54,13 +54,14 @@ BuildRequires:	glib2-devel >= 1:2.14
 %{?with_drm:BuildRequires:	libdrm-devel}
 BuildRequires:	libpng-devel >= 2:1.4.0
 %if %{with svg} && %{with tests}
-BuildRequires:	librsvg-devel >= 2.15.0
+BuildRequires:	librsvg-devel >= 2.35.0
 %endif
 %if %{with ps} && %{with tests}
 BuildRequires:	libspectre-devel >= 0.2.0
 %endif
 BuildRequires:	libtool >= 2:2.2
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
+BuildRequires:	lzo-devel >= 2
 BuildRequires:	pixman-devel >= 0.30.0
 BuildRequires:	pkgconfig >= 1:0.9
 %if %{with pdf} && %{with tests}
@@ -168,6 +169,7 @@ Summary:	GObject functions library for Cairo graphics library
 Summary(pl.UTF-8):	Biblioteka funkcji GObject dla biblioteki graficznej Cairo
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	glib2 >= 1:2.14
 
 %description gobject
 GObject functions library for Cairo graphics library.
