@@ -63,7 +63,7 @@ BuildRequires:	libtool >= 2:2.2
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
 BuildRequires:	lzo-devel >= 2
 BuildRequires:	pixman-devel >= 0.30.0
-BuildRequires:	pkgconfig >= 1:0.9
+BuildRequires:	pkgconfig >= 1:0.18
 %if %{with pdf} && %{with tests}
 BuildRequires:	poppler-glib-devel >= 0.17.4
 %endif
