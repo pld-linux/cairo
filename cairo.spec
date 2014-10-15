@@ -24,12 +24,12 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.12.16
-Release:	7
+Version:	1.14.0
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	a1304edcdc99282f478b995ee5f8f854
+# Source0-md5:	fc3a5edeba703f906f2241b394f0cced
 Patch0:		%{name}-link.patch
 URL:		http://cairographics.org/
 %{?with_directfb:BuildRequires:	DirectFB-devel}
@@ -49,7 +49,7 @@ BuildRequires:	binutils-devel
 %{?with_cogl:BuildRequires:	cogl-devel}
 BuildRequires:	fontconfig-devel >= 2.2.95
 BuildRequires:	freetype-devel >= 1:2.3.0
-BuildRequires:	glib2-devel >= 1:2.0
+BuildRequires:	glib2-devel >= 1:2.14
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
 %{?with_drm:BuildRequires:	libdrm-devel}
 BuildRequires:	libpng-devel >= 2:1.4.0
@@ -61,7 +61,7 @@ BuildRequires:	libspectre-devel >= 0.2.0
 %endif
 BuildRequires:	libtool >= 2:2.2
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
-BuildRequires:	pixman-devel >= 0.22.0
+BuildRequires:	pixman-devel >= 0.30.0
 BuildRequires:	pkgconfig >= 1:0.9
 %if %{with pdf} && %{with tests}
 BuildRequires:	poppler-glib-devel >= 0.17.4
@@ -83,7 +83,7 @@ BuildRequires:	zlib-devel
 Requires:	fontconfig-libs >= 2.2.95
 Requires:	freetype >= 1:2.3.0
 %{?with_xcb:Requires:	libxcb >= 1.6}
-Requires:	pixman >= 0.22.0
+Requires:	pixman >= 0.30.0
 %{?with_drm:Requires:	udev-libs >= 1:136}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -134,7 +134,7 @@ Requires:	freetype-devel >= 1:2.3.0
 %{?with_drm:Requires:	libdrm-devel}
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
-Requires:	pixman-devel >= 0.22.0
+Requires:	pixman-devel >= 0.30.0
 %{?with_drm:Requires:	udev-devel >= 1:136}
 %if "%{pld_release}" == "ac"
 Requires:	xrender-devel >= 0.6
@@ -181,7 +181,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Cairo GObject
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gobject = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.0
+Requires:	glib2-devel >= 1:2.14
 
 %description gobject-devel
 Header files for Cairo GObject library.
