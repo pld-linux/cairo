@@ -135,6 +135,7 @@ Requires:	freetype-devel >= 1:2.3.0
 %{?with_drm:Requires:	libdrm-devel}
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
+Requires:	lzo-devel >= 2
 Requires:	pixman-devel >= 0.30.0
 %{?with_drm:Requires:	udev-devel >= 1:136}
 %if "%{pld_release}" == "ac"
