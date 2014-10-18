@@ -1,0 +1,16 @@
+Hack to avoid leaking cairo-gobject dependencies to main cairo.pc
+--- cairo-1.14.0/build/aclocal.enable.m4.orig	2014-10-18 14:18:01.248879262 +0200
++++ cairo-1.14.0/build/aclocal.enable.m4	2014-10-18 14:18:52.212210456 +0200
+@@ -101,10 +101,12 @@ AC_DEFUN([_CAIRO_ENABLE],
+ 
+ 	AS_IF([test "x$use_$1" = "xyes"],
+ 	[dnl
++		AS_IF([test "cr_feature" != "gobject"],[dnl
+ 		CAIRO_ACCUMULATED_FEATURE_VARS_FOREACH([cr_var],
+ 		[dnl
+ 			CAIRO_ACCUMULATE_UNQUOTED_BEFORE(cr_var, [$]cr_feature[_]cr_var)
+ 		])dnl
++		])dnl
+ 	],[dnl
+ 		dnl If not enabled, empty the vars so no one accidentally uses them.
+ 		CAIRO_FEATURE_VARS_FOREACH([cr_var], [unset cr_feature[_]cr_var]m4_newline)

@@ -31,6 +31,7 @@ Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
 # Source0-md5:	fc3a5edeba703f906f2241b394f0cced
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-gobject-deps.patch
 URL:		http://cairographics.org/
 %{?with_directfb:BuildRequires:	DirectFB-devel}
 %if %{with gl} || %{with glesv2} || %{with openvg}
@@ -235,6 +236,7 @@ Dokumentacja API Cairo.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{?with_apidocs:%{__gtkdocize}}
