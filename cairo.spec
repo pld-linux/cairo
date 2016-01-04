@@ -4,7 +4,7 @@
 %bcond_with	cogl		# Cogl surface backend [incompatible with cogl 1.12.x]
 %bcond_with	directfb	# DirectFB surface backend
 %bcond_with	drm		# DRM surface backend
-%bcond_without	gl		# OpenGL surface backend
+%bcond_with	gl		# OpenGL surface backend, http://lists.pld-linux.org/mailman/pipermail/pld-devel-en/2015-May/024387.html
 %bcond_with	glesv2		# OpenGLESv2 surface backend (mutually exclusive with gl)
 %bcond_with	openvg		# OpenVG surface backend
 %bcond_without	pdf		# PDF surface backend
