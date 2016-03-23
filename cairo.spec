@@ -25,7 +25,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.14.6
-Release:	3
+Release:	4
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
@@ -247,20 +247,20 @@ Dokumentacja API Cairo.
 %{__automake}
 %configure \
 	--disable-silent-rules \
-	%{?with_cogl:--enable-cogl} \
-	%{?with_directfb:--enable-directfb} \
+	%{__enable_disable cogl} \
+	%{__enable_disable directfb} \
+	%{__enable_disable gl} \
+	%{__enable_disable glesv2} \
+	%{__enable_disable apidocs gtk-doc} \
+	%{__enable_disable pdf} \
+	%{__enable_disable ps} \
+	%{__enable_disable qt} \
+	%{__enable_disable svg} \
+	%{__enable_disable openvg vg} \
+	%{__enable_disable xcb} \
 	--enable-ft \
-	%{?with_gl:--enable-gl} \
-	%{?with_glesv2:--enable-glesv2} \
-	%{?with_apidocs:--enable-gtk-doc} \
-	%{?with_pdf:--enable-pdf} \
 	--enable-png \
-	%{?with_ps:--enable-ps} \
-	%{?with_qt:--enable-qt} \
-	%{!?with_svg:--disable-svg} \
 	--enable-tee \
-	%{?with_openvg:--enable-vg} \
-	%{?with_xcb:--enable-xcb} \
 	--enable-xml \
 	--with-html-dir=%{_gtkdocdir}
 
