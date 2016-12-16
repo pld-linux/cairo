@@ -24,15 +24,15 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.14.6
-Release:	5
+Version:	1.14.8
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
-Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	23a0b2f0235431d35238df1d3a517fdb
+Source0:	https://www.cairographics.org/releases/%{name}-%{version}.tar.xz
+# Source0-md5:	4ef0db2eacb271c74f8a3fd87822aa98
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-gobject-deps.patch
-URL:		http://cairographics.org/
+URL:		https://www.cairographics.org/
 %{?with_directfb:BuildRequires:	DirectFB-devel}
 %if %{with gl} || %{with glesv2} || %{with openvg}
 BuildRequires:	EGL-devel >= 1.1
