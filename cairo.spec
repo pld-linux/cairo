@@ -5,7 +5,8 @@
 %bcond_with	directfb	# DirectFB surface backend
 %bcond_with	drm		# DRM surface backend
 %bcond_with	gl		# OpenGL surface backend, http://lists.pld-linux.org/mailman/pipermail/pld-devel-en/2015-May/024387.html
-%bcond_with	glesv2		# OpenGLESv2 surface backend (mutually exclusive with gl)
+%bcond_with	glesv2		# OpenGLESv2 surface backend (mutually exclusive with gl and glesv3)
+%bcond_with	glesv3		# OpenGLESv3 surface backend (mutually exclusive with gl and glesv2)
 %bcond_with	openvg		# OpenVG surface backend
 %bcond_without	pdf		# PDF surface backend
 %bcond_without	ps		# PS surface backend
@@ -18,8 +19,11 @@
 %endif
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 
-%if %{with glesv2}
+%if %{with glesv2} || %{with glesv3}
 %undefine	with_gl
+%endif
+%if %{with glesv3}
+%undefine	with_glesv2
 %endif
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
@@ -34,7 +38,7 @@ Patch0:		%{name}-link.patch
 Patch1:		%{name}-gobject-deps.patch
 URL:		https://www.cairographics.org/
 %{?with_directfb:BuildRequires:	DirectFB-devel}
-%if %{with gl} || %{with glesv2} || %{with openvg}
+%if %{with gl} || %{with glesv2} || %{with glesv3} || %{with openvg}
 BuildRequires:	EGL-devel >= 1.1
 %endif
 %if %{with gl} || %{with openvg}
@@ -42,6 +46,7 @@ BuildRequires:	OpenGL-GLX-devel
 %endif
 %{?with_gl:BuildRequires:	OpenGL-devel}
 %{?with_glesv2:BuildRequires:	OpenGLESv2-devel >= 2.0}
+%{?with_glesv3:BuildRequires:	OpenGLESv3-devel >= 3.0}
 %{?with_openvg:BuildRequires:	OpenVG-devel}
 %{?with_qt:BuildRequires:	QtGui-devel >= 4.4.0}
 BuildRequires:	autoconf >= 2.63
@@ -49,8 +54,11 @@ BuildRequires:	automake >= 1:1.11
 BuildRequires:	binutils-devel
 %{?with_cogl:BuildRequires:	cogl-devel}
 BuildRequires:	fontconfig-devel >= 2.2.95
-BuildRequires:	freetype-devel >= 1:2.3.0
+BuildRequires:	freetype-devel >= 1:2.5.1
 BuildRequires:	glib2-devel >= 1:2.14
+%if %{with svg} && %{with tests}
+BuildRequires:	gtk+2-devel >= 1:2.0
+%endif
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
 %{?with_drm:BuildRequires:	libdrm-devel >= 2.4}
 BuildRequires:	libpng-devel >= 2:1.4.0
@@ -83,7 +91,8 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 %{?with_qt:Requires:	QtGui >= 4.4.0}
 Requires:	fontconfig-libs >= 2.2.95
-Requires:	freetype >= 1:2.3.0
+Requires:	freetype >= 1:2.5.1
+%{?with_drm:Requires:	libdrm >= 2.4}
 %{?with_xcb:Requires:	libxcb >= 1.6}
 Requires:	pixman >= 0.30.0
 %{?with_drm:Requires:	udev-libs >= 1:136}
@@ -128,12 +137,13 @@ Requires:	EGL-devel >= 1.1
 %endif
 %{?with_gl:Requires:	OpenGL-devel}
 %{?with_glesv2:Requires:	OpenGLESv2-devel >= 2.0}
+%{?with_glesv3:Requires:	OpenGLESv3-devel >= 3.0}
 %{?with_openvg:Requires:	OpenVG-devel}
 %{?with_qt:Requires:	QtGui-devel >= 4.4.0}
 %{?with_cogl:Requires:	cogl-devel}
 Requires:	fontconfig-devel >= 2.2.95
-Requires:	freetype-devel >= 1:2.3.0
-%{?with_drm:Requires:	libdrm-devel}
+Requires:	freetype-devel >= 1:2.5.1
+%{?with_drm:Requires:	libdrm-devel >= 2.4}
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
 Requires:	lzo-devel >= 2
@@ -251,6 +261,7 @@ Dokumentacja API Cairo.
 	%{__enable_disable directfb} \
 	%{__enable_disable gl} \
 	%{__enable_disable glesv2} \
+	%{__enable_disable glesv3} \
 	%{__enable_disable apidocs gtk-doc} \
 	%{__enable_disable pdf} \
 	%{__enable_disable ps} \
@@ -308,12 +319,14 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
 %{?with_directfb:%{_pkgconfigdir}/cairo-directfb.pc}
-%if %{with gl} || %{with glesv2} || %{with openvg}
+%if %{with gl} || %{with glesv2} || %{with glesv3} || %{with openvg}
 %{_pkgconfigdir}/cairo-egl.pc
 %endif
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
 %{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
+%{?with_glesv2:%{_pkgconfigdir}/cairo-glesv2.pc}
+%{?with_glesv3:%{_pkgconfigdir}/cairo-glesv3.pc}
 %if %{with gl} || %{with openvg}
 %{_pkgconfigdir}/cairo-glx.pc
 %endif
