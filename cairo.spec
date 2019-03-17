@@ -29,7 +29,7 @@ Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
 Version:	1.16.0
-Release:	2
+Release:	3
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	https://www.cairographics.org/releases/%{name}-%{version}.tar.xz
@@ -248,6 +248,10 @@ Dokumentacja API Cairo.
 %patch0 -p1
 %patch1 -p1
 
+%if %{without tests}
+%{__sed} -i -e '/SUBDIRS += boilerplate test perf/d' Makefile.am
+%endif
+
 %build
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
@@ -284,6 +288,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libcairo*.la
 # LD_PRELOADable library
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-trace.{la,a}
 # LD_PRELOADable modules(?)
@@ -313,8 +319,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo.so
 %attr(755,root,root) %{_libdir}/libcairo-script-interpreter.so
-%{_libdir}/libcairo.la
-%{_libdir}/libcairo-script-interpreter.la
 %{_includedir}/cairo
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
@@ -357,7 +361,6 @@ rm -rf $RPM_BUILD_ROOT
 %files gobject-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcairo-gobject.so
-%{_libdir}/libcairo-gobject.la
 %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo-gobject.pc
 
