@@ -4,7 +4,7 @@
 %bcond_with	cogl		# Cogl surface backend [incompatible with cogl 1.12.x]
 %bcond_with	directfb	# DirectFB surface backend
 %bcond_with	drm		# DRM surface backend
-%bcond_with	gl		# OpenGL surface backend, http://lists.pld-linux.org/mailman/pipermail/pld-devel-en/2015-May/024387.html
+%bcond_with	opengl		# OpenGL surface backend, http://lists.pld-linux.org/mailman/pipermail/pld-devel-en/2015-May/024387.html
 %bcond_with	glesv2		# OpenGLESv2 surface backend (mutually exclusive with gl and glesv3)
 %bcond_with	glesv3		# OpenGLESv3 surface backend (mutually exclusive with gl and glesv2)
 %bcond_with	openvg		# OpenVG surface backend
@@ -20,7 +20,7 @@
 %bcond_with	tests		# perform tests (can fail due to out of memory)
 
 %if %{with glesv2} || %{with glesv3}
-%undefine	with_gl
+%undefine	with_opengl
 %endif
 %if %{with glesv3}
 %undefine	with_glesv2
@@ -40,13 +40,13 @@ Patch2:		%{name}-ft-Use-FT_Done_MM_Var-instead-of-free-when-available.patch
 Patch3:		%{name}-composite_color_glyphs.patch
 URL:		https://www.cairographics.org/
 %{?with_directfb:BuildRequires:	DirectFB-devel}
-%if %{with gl} || %{with glesv2} || %{with glesv3} || %{with openvg}
+%if %{with opengl} || %{with glesv2} || %{with glesv3} || %{with openvg}
 BuildRequires:	EGL-devel >= 1.1
 %endif
-%if %{with gl} || %{with openvg}
+%if %{with opengl} || %{with openvg}
 BuildRequires:	OpenGL-GLX-devel
 %endif
-%{?with_gl:BuildRequires:	OpenGL-devel}
+%{?with_opengl:BuildRequires:	OpenGL-devel}
 %{?with_glesv2:BuildRequires:	OpenGLESv2-devel >= 2.0}
 %{?with_glesv3:BuildRequires:	OpenGLESv3-devel >= 3.0}
 %{?with_openvg:BuildRequires:	OpenVG-devel}
@@ -134,10 +134,10 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?with_directfb:Requires:	DirectFB-devel}
-%if %{with gl} || %{with glesv2} || %{with openvg}
+%if %{with opengl} || %{with glesv2} || %{with openvg}
 Requires:	EGL-devel >= 1.1
 %endif
-%{?with_gl:Requires:	OpenGL-devel}
+%{?with_opengl:Requires:	OpenGL-devel}
 %{?with_glesv2:Requires:	OpenGLESv2-devel >= 2.0}
 %{?with_glesv3:Requires:	OpenGLESv3-devel >= 3.0}
 %{?with_openvg:Requires:	OpenVG-devel}
@@ -267,7 +267,7 @@ Dokumentacja API Cairo.
 	--disable-silent-rules \
 	%{__enable_disable cogl} \
 	%{__enable_disable directfb} \
-	%{__enable_disable gl} \
+	%{__enable_disable opengl gl} \
 	%{__enable_disable glesv2} \
 	%{__enable_disable glesv3} \
 	%{__enable_disable apidocs gtk-doc} \
@@ -327,15 +327,15 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo.pc
 %{?with_directfb:%{_pkgconfigdir}/cairo-directfb.pc}
-%if %{with gl} || %{with glesv2} || %{with glesv3} || %{with openvg}
+%if %{with opengl} || %{with glesv2} || %{with glesv3} || %{with openvg}
 %{_pkgconfigdir}/cairo-egl.pc
 %endif
 %{_pkgconfigdir}/cairo-fc.pc
 %{_pkgconfigdir}/cairo-ft.pc
-%{?with_gl:%{_pkgconfigdir}/cairo-gl.pc}
+%{?with_opengl:%{_pkgconfigdir}/cairo-gl.pc}
 %{?with_glesv2:%{_pkgconfigdir}/cairo-glesv2.pc}
 %{?with_glesv3:%{_pkgconfigdir}/cairo-glesv3.pc}
-%if %{with gl} || %{with openvg}
+%if %{with opengl} || %{with openvg}
 %{_pkgconfigdir}/cairo-glx.pc
 %endif
 %{?with_pdf:%{_pkgconfigdir}/cairo-pdf.pc}
