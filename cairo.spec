@@ -26,9 +26,7 @@ BuildRequires:	fonttools
 # pkgconfig(freetype2) >= 25.0.19
 BuildRequires:	freetype-devel >= 1:2.13.0
 BuildRequires:	glib2-devel >= 1:2.14
-%if %{with svg} && %{with tests}
 BuildRequires:	gtk+2-devel >= 1:2.0
-%endif
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
 BuildRequires:	libpng-devel >= 2:1.4.0
 %if %{with svg} && %{with tests}
