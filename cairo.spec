@@ -44,6 +44,7 @@ BuildRequires:	pkgconfig >= 1:0.18
 BuildRequires:	poppler-glib-devel >= 0.17.4
 %endif
 BuildRequires:	rpm >= 4.4.9-56
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
