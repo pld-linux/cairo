@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	pdf		# PDF surface backend
-%bcond_without	ps		# PS surface backend
 %bcond_without	svg		# SVG surface backend
 %bcond_without	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
@@ -32,7 +31,7 @@ BuildRequires:	libpng-devel >= 2:1.4.0
 %if %{with svg} && %{with tests}
 BuildRequires:	librsvg-devel >= 2.35.0
 %endif
-%if %{with ps} && %{with tests}
+%if %{with tests}
 BuildRequires:	libspectre-devel >= 0.2.0
 %endif
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
@@ -200,7 +199,7 @@ Dokumentacja API Cairo.
 	-Dgtk2-utils=enabled \
 	-Dgtk_doc=%{__true_false apidocs} \
 	-Dpng=enabled \
-	-Dspectre=%{__enabled_disabled ps} \
+	-Dspectre=%{__enabled_disabled tests} \
 	-Dtee=enabled \
 	-Dtests=disabled \
 	-Dxcb=%{__enabled_disabled xcb} \
@@ -248,7 +247,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cairo-ft.pc
 %{?with_pdf:%{_pkgconfigdir}/cairo-pdf.pc}
 %{_pkgconfigdir}/cairo-png.pc
-%{?with_ps:%{_pkgconfigdir}/cairo-ps.pc}
+%{_pkgconfigdir}/cairo-ps.pc
 %{_pkgconfigdir}/cairo-script.pc
 %{_pkgconfigdir}/cairo-script-interpreter.pc
 %{?with_svg:%{_pkgconfigdir}/cairo-svg.pc}
