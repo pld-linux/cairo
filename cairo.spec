@@ -5,6 +5,7 @@
 %bcond_without	svg		# SVG surface backend
 %bcond_without	xcb		# XCB backend
 %bcond_with	tests		# perform tests (can fail due to out of memory)
+%bcond_without	static_libs	# static libraries
 
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
@@ -190,6 +191,7 @@ Dokumentacja API Cairo.
 
 %build
 %meson build \
+	%{!?with_static_libs:--default-library=shared} \
 	-Dfontconfig=enabled \
 	-Dfreetype=enabled \
 	-Dgtk_doc=%{__true_false apidocs} \
@@ -211,7 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 # LD_PRELOADable library
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-{fdr,trace}.a
+%{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-{fdr,trace}.a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -252,10 +254,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cairo-xlib.pc
 %{_pkgconfigdir}/cairo-xlib-xrender.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo.a
 %{_libdir}/libcairo-script-interpreter.a
+%endif
 
 %files gobject
 %defattr(644,root,root,755)
@@ -268,9 +272,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cairo/cairo-gobject.h
 %{_pkgconfigdir}/cairo-gobject.pc
 
+%if %{with static_libs}
 %files gobject-static
 %defattr(644,root,root,755)
 %{_libdir}/libcairo-gobject.a
+%endif
 
 %files trace
 %defattr(644,root,root,755)
