@@ -10,21 +10,22 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.18.0
-Release:	4
+Version:	1.18.2
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	https://www.cairographics.org/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	3f0685fbadc530606f965b9645bb51d9
+# Source0-md5:	5ad67c707edd0003f1b91c8bbc0005c1
 URL:		https://www.cairographics.org/
 BuildRequires:	binutils-devel
-BuildRequires:	fontconfig-devel >= 2.2.95
+BuildRequires:	fontconfig-devel >= 2.13.0
 %if %{with tests}
 # ttx
 BuildRequires:	fonttools
 %endif
 # pkgconfig(freetype2) >= 25.0.19
 BuildRequires:	freetype-devel >= 1:2.13.0
+BuildRequires:	gcc >= 6:4.7
 BuildRequires:	glib2-devel >= 1:2.14
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.15}
 BuildRequires:	libpng-devel >= 2:1.4.0
@@ -36,9 +37,10 @@ BuildRequires:	libspectre-devel >= 0.2.0
 %endif
 %{?with_xcb:BuildRequires:	libxcb-devel >= 1.6}
 BuildRequires:	lzo-devel >= 2
-BuildRequires:	meson >= 0.59.0
+BuildRequires:	meson >= 1.3.0
 BuildRequires:	ninja >= 1.5
-BuildRequires:	pixman-devel >= 0.36.0
+# TODO: 0.42.3 when released
+BuildRequires:	pixman-devel >= 0.40.0
 BuildRequires:	pkgconfig >= 1:0.18
 %if %{with pdf} && %{with tests}
 BuildRequires:	poppler-glib-devel >= 0.17.4
@@ -53,10 +55,10 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXrender-devel >= 0.6
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires:	fontconfig-libs >= 2.2.95
+Requires:	fontconfig-libs >= 2.13.0
 Requires:	freetype >= 1:2.13.0
 %{?with_xcb:Requires:	libxcb >= 1.6}
-Requires:	pixman >= 0.36.0
+Requires:	pixman >= 0.40.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -92,12 +94,12 @@ Summary:	Development files for Cairo library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki Cairo
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	fontconfig-devel >= 2.2.95
+Requires:	fontconfig-devel >= 2.13.0
 Requires:	freetype-devel >= 1:2.13.0
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
 Requires:	lzo-devel >= 2
-Requires:	pixman-devel >= 0.36.0
+Requires:	pixman-devel >= 0.40.0
 Requires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
 Requires:	xorg-lib-libXext-devel
 Requires:	xorg-lib-libXrender-devel >= 0.6
