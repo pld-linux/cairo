@@ -10,15 +10,14 @@
 Summary:	Cairo - multi-platform 2D graphics library
 Summary(pl.UTF-8):	Cairo - wieloplatformowa biblioteka graficzna 2D
 Name:		cairo
-Version:	1.18.2
-Release:	2
+Version:	1.18.4
+Release:	1
 License:	LGPL v2.1 or MPL v1.1
 Group:		Libraries
 Source0:	https://www.cairographics.org/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	5ad67c707edd0003f1b91c8bbc0005c1
-Patch1:		%{name}-1.18.2-cups.patch
+# Source0-md5:	db575fb41bbda127e0147e401f36f8ac
 URL:		https://www.cairographics.org/
-BuildRequires:	binutils-devel
+BuildRequires:	binutils-devel >= 2.21.53
 BuildRequires:	fontconfig-devel >= 2.13.0
 %if %{with tests}
 # ttx
@@ -40,8 +39,7 @@ BuildRequires:	libspectre-devel >= 0.2.0
 BuildRequires:	lzo-devel >= 2
 BuildRequires:	meson >= 1.3.0
 BuildRequires:	ninja >= 1.5
-# TODO: 0.42.3 when released
-BuildRequires:	pixman-devel >= 0.40.0
+BuildRequires:	pixman-devel >= 0.42.3
 BuildRequires:	pkgconfig >= 1:0.18
 %if %{with pdf} && %{with tests}
 BuildRequires:	poppler-glib-devel >= 0.17.4
@@ -59,7 +57,7 @@ BuildRequires:	zlib-devel
 Requires:	fontconfig-libs >= 2.13.0
 Requires:	freetype >= 1:2.13.0
 %{?with_xcb:Requires:	libxcb >= 1.6}
-Requires:	pixman >= 0.40.0
+Requires:	pixman >= 0.42.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -100,7 +98,7 @@ Requires:	freetype-devel >= 1:2.13.0
 Requires:	libpng-devel >= 2:1.4.0
 %{?with_xcb:Requires:	libxcb-devel >= 1.6}
 Requires:	lzo-devel >= 2
-Requires:	pixman-devel >= 0.40.0
+Requires:	pixman-devel >= 0.42.3
 Requires:	xorg-lib-libX11-devel%{?with_xcb: >= 1.1}
 Requires:	xorg-lib-libXext-devel
 Requires:	xorg-lib-libXrender-devel >= 0.6
@@ -191,29 +189,34 @@ Dokumentacja API Cairo.
 
 %prep
 %setup -q
-%patch 1 -p1
+
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
+	-Ddwrite=disabled \
 	-Dfontconfig=enabled \
 	-Dfreetype=enabled \
+	-Dglib=enabled \
 	-Dgtk_doc=%{__true_false apidocs} \
+	-Dlzo=enabled \
 	-Dpng=enabled \
+	-Dquartz=disabled \
 	-Dspectre=%{__enabled_disabled tests} \
+	-Dsymbol-lookup=enabled \
 	-Dtee=enabled \
 	-Dtests=disabled \
 	-Dxcb=%{__enabled_disabled xcb} \
 	-Dxlib=enabled \
 	-Dzlib=enabled
 
-%ninja_build -C build
+%meson_build
 
-%{?with_tests:%ninja_test -C build}
+%{?with_tests:%meson_test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # LD_PRELOADable library
 %{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/cairo/libcairo-{fdr,trace}.a}
